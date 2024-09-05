@@ -75,7 +75,6 @@ public class LoginCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         campo_senha = new javax.swing.JPasswordField();
@@ -87,9 +86,6 @@ public class LoginCliente extends javax.swing.JFrame {
         logvet = new javax.swing.JButton();
         logadm = new javax.swing.JButton();
         campo_login = new javax.swing.JFormattedTextField();
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/Clínica Veterinária.png"))); // NOI18N
-        jLabel3.setText("title");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clínica Veterinária Xulia's");
@@ -104,7 +100,6 @@ public class LoginCliente extends javax.swing.JFrame {
 
         botao_login.setBackground(new java.awt.Color(153, 204, 255));
         botao_login.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        botao_login.setForeground(new java.awt.Color(255, 255, 255));
         botao_login.setText("Entrar");
         botao_login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botao_login.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +110,6 @@ public class LoginCliente extends javax.swing.JFrame {
 
         botao_cad.setBackground(new java.awt.Color(153, 204, 255));
         botao_cad.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        botao_cad.setForeground(new java.awt.Color(255, 255, 255));
         botao_cad.setText("Cadastre-se");
         botao_cad.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botao_cad.addActionListener(new java.awt.event.ActionListener() {
@@ -262,7 +256,7 @@ public class LoginCliente extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -295,7 +289,6 @@ public class LoginCliente extends javax.swing.JFrame {
     private javax.swing.JButton esqueceu_senha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel label_status;
     private javax.swing.JButton logadm;
     private javax.swing.JButton logvet;

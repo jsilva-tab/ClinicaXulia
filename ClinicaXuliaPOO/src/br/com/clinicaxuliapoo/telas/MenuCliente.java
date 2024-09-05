@@ -5,10 +5,6 @@ import br.com.clinicaxuliapoo.model.ModuloConexao;
 import java.text.DateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import java.awt.Image;
-import java.awt.Graphics;
-import java.net.URL;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -273,7 +269,7 @@ public class MenuCliente extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
