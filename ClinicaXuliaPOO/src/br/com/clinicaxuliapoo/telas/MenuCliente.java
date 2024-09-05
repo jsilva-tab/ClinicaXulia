@@ -1,7 +1,7 @@
 package br.com.clinicaxuliapoo.telas;
 
+import br.com.clinicaxuliapoo.model.Cliente;
 import java.sql.*;
-import br.com.clinicaxuliapoo.model.ModuloConexao;
 import java.text.DateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -19,11 +19,14 @@ public class MenuCliente extends javax.swing.JFrame {
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
+    private Cliente logCli;
+    private String cpfUsuarioLogado;
+
     
     public MenuCliente() {
         initComponents();
-        conexao = ModuloConexao.conector();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +49,11 @@ public class MenuCliente extends javax.swing.JFrame {
         itemPerfil = new javax.swing.JMenuItem();
         itemPet = new javax.swing.JMenuItem();
         menuConsultas = new javax.swing.JMenu();
+        itemMarcarConsulta = new javax.swing.JMenuItem();
+        itemHistorico = new javax.swing.JMenuItem();
         menuVacinas = new javax.swing.JMenu();
+        itemMarcaVacina = new javax.swing.JMenuItem();
+        itemCarteiras = new javax.swing.JMenuItem();
         menuAgendamentos = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -134,7 +141,6 @@ public class MenuCliente extends javax.swing.JFrame {
         jMenu1.setText("Perfil");
         jMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        itemPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/pessoas.png"))); // NOI18N
         itemPerfil.setText("Editar Perfil");
         itemPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +149,6 @@ public class MenuCliente extends javax.swing.JFrame {
         });
         jMenu1.add(itemPerfil);
 
-        itemPet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/pegada.png"))); // NOI18N
         itemPet.setText("Perfil Pets");
         itemPet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,6 +167,18 @@ public class MenuCliente extends javax.swing.JFrame {
                 menuConsultasMouseClicked(evt);
             }
         });
+
+        itemMarcarConsulta.setText("Marcar Consulta");
+        menuConsultas.add(itemMarcarConsulta);
+
+        itemHistorico.setText("Histórico de Consultas");
+        itemHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemHistoricoActionPerformed(evt);
+            }
+        });
+        menuConsultas.add(itemHistorico);
+
         jMenuBar1.add(menuConsultas);
 
         menuVacinas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/vacina.png"))); // NOI18N
@@ -172,6 +189,23 @@ public class MenuCliente extends javax.swing.JFrame {
                 menuVacinasMouseClicked(evt);
             }
         });
+
+        itemMarcaVacina.setText("Marcar Vacinas");
+        itemMarcaVacina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemMarcaVacinaActionPerformed(evt);
+            }
+        });
+        menuVacinas.add(itemMarcaVacina);
+
+        itemCarteiras.setText("Minhas Carteiras");
+        itemCarteiras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCarteirasActionPerformed(evt);
+            }
+        });
+        menuVacinas.add(itemCarteiras);
+
         jMenuBar1.add(menuVacinas);
 
         menuAgendamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/veterinario.png"))); // NOI18N
@@ -258,6 +292,18 @@ public class MenuCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_menuAgendamentosMouseClicked
 
+    private void itemHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemHistoricoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemHistoricoActionPerformed
+
+    private void itemMarcaVacinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMarcaVacinaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemMarcaVacinaActionPerformed
+
+    private void itemCarteirasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCarteirasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemCarteirasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -294,6 +340,10 @@ public class MenuCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem itemCarteiras;
+    private javax.swing.JMenuItem itemHistorico;
+    private javax.swing.JMenuItem itemMarcaVacina;
+    private javax.swing.JMenuItem itemMarcarConsulta;
     private javax.swing.JMenuItem itemPerfil;
     private javax.swing.JMenuItem itemPet;
     private javax.swing.JLabel jLabel1;
