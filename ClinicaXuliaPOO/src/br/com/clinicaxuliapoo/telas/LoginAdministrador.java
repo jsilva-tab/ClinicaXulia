@@ -13,27 +13,27 @@ public class LoginAdministrador extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     
-    public void logar() {
-        String sql = "select * from tb_admin where login_admin=? and senha_admin=?";
-        try {
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, campo_login.getText());
-            pst.setString(2, campo_senha.getText());
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                MenuAdministrador menuadm = new MenuAdministrador();
-                menuadm.setVisible(true);
-                MenuAdministrador.lblUser.setText(rs.getString(1));
-                this.dispose();
-                conexao.close(); 
-            } else {
-                JOptionPane.showMessageDialog(null, "Login ou Senha inválidos.");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-    
+//    public void logar() {
+//        String sql = "select * from tb_admin where login_admin=? and senha_admin=?";
+//        try {
+//            pst = conexao.prepareStatement(sql);
+//            pst.setString(1, campo_login.getText());
+//            pst.setString(2, campo_senha.getText());
+//            rs = pst.executeQuery();
+//            if (rs.next()) {
+//                MenuAdministrador menuadm = new MenuAdministrador();
+//                menuadm.setVisible(true);
+//                MenuAdministrador.lblUser.setText(rs.getString(1));
+//                this.dispose();
+//                conexao.close(); 
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Login ou Senha inválidos.");
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e);
+//        }
+//    }
+//    
     public void voltarLoginCliente(){
         LoginCliente lgncli = new LoginCliente();
         lgncli.setVisible(true);
@@ -161,8 +161,7 @@ public class LoginAdministrador extends javax.swing.JFrame {
     }//GEN-LAST:event_campo_loginActionPerformed
 
     private void botao_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_loginActionPerformed
-        //chamando o metodo logar
-        logar();
+        
     }//GEN-LAST:event_botao_loginActionPerformed
 
     private void botao_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_voltarActionPerformed

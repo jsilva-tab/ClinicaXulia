@@ -5,6 +5,10 @@ import br.com.clinicaxuliapoo.model.ModuloConexao;
 import java.text.DateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import java.awt.Image;
+import java.awt.Graphics;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -37,10 +41,10 @@ public class MenuCliente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblUser = new javax.swing.JLabel();
-        icon = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         telaFundo = new javax.swing.JDesktopPane();
-        TelaFundo = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         itemPerfil = new javax.swing.JMenuItem();
@@ -63,20 +67,19 @@ public class MenuCliente extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 0, 204));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 33)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Bem vindo!");
 
-        lblUser.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblUser.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
         lblUser.setForeground(new java.awt.Color(255, 255, 255));
         lblUser.setText("Usuário");
 
-        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/icons8-pets-50.png"))); // NOI18N
-        icon.setText("icon");
-
-        lblData.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        lblData.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
         lblData.setForeground(new java.awt.Color(255, 255, 255));
         lblData.setText("data");
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/veterinario (2).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,53 +89,49 @@ public class MenuCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblData)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(lblUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 79, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                        .addComponent(lblData)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addGap(0, 68, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(icon, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
+                .addComponent(jLabel4)
+                .addGap(50, 50, 50))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(63, 63, 63)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 339, Short.MAX_VALUE)
-                .addComponent(icon)
-                .addGap(43, 43, 43))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(55, 55, 55))
         );
 
-        TelaFundo.setText("jLabel2");
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/Design sem nome (2).png"))); // NOI18N
 
-        telaFundo.setLayer(TelaFundo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        telaFundo.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout telaFundoLayout = new javax.swing.GroupLayout(telaFundo);
         telaFundo.setLayout(telaFundoLayout);
         telaFundoLayout.setHorizontalGroup(
             telaFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(telaFundoLayout.createSequentialGroup()
-                .addGap(298, 298, 298)
-                .addComponent(TelaFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(355, Short.MAX_VALUE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         telaFundoLayout.setVerticalGroup(
             telaFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(telaFundoLayout.createSequentialGroup()
-                .addGap(247, 247, 247)
-                .addComponent(TelaFundo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabel2)
         );
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/pet-shop.png"))); // NOI18N
@@ -162,16 +161,31 @@ public class MenuCliente extends javax.swing.JFrame {
         menuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/veterinario (1).png"))); // NOI18N
         menuConsultas.setText("Consultas");
         menuConsultas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuConsultas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuConsultasMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(menuConsultas);
 
         menuVacinas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/vacina.png"))); // NOI18N
         menuVacinas.setText("Vacinas");
         menuVacinas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuVacinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuVacinasMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(menuVacinas);
 
         menuAgendamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/veterinario.png"))); // NOI18N
         menuAgendamentos.setText("Agendamentos");
         menuAgendamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menuAgendamentos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuAgendamentosMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(menuAgendamentos);
 
         jMenu2.setText("Opções");
@@ -195,14 +209,16 @@ public class MenuCliente extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(telaFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(telaFundo)
+            .addComponent(telaFundo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -229,10 +245,22 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void itemPetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPetActionPerformed
-        PerfilPets ppets = new PerfilPets();
-        ppets.setVisible(true);
-        this.dispose();
+        PetsPerfil petPerf = new PetsPerfil();
+        telaFundo.add(petPerf);
+        petPerf.setVisible(true);
     }//GEN-LAST:event_itemPetActionPerformed
+
+    private void menuConsultasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuConsultasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuConsultasMouseClicked
+
+    private void menuVacinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuVacinasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuVacinasMouseClicked
+
+    private void menuAgendamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAgendamentosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuAgendamentosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -270,11 +298,11 @@ public class MenuCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel TelaFundo;
-    private javax.swing.JLabel icon;
     private javax.swing.JMenuItem itemPerfil;
     private javax.swing.JMenuItem itemPet;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
