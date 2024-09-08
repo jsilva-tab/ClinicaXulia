@@ -60,7 +60,7 @@ public class AdmDAO {
                 adm.setName(rs.getString("name"));
                 adm.setEmail(rs.getString("email"));
                 return adm;
-            }
+            } 
         } catch (SQLException e) {
             e.printStackTrace();
         }
