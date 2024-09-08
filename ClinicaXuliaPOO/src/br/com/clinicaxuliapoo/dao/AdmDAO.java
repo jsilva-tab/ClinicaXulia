@@ -62,7 +62,7 @@ public class AdmDAO {
                 return adm;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); 
         }
         return null;
     }
