@@ -76,5 +76,9 @@ public class Cliente{
     public void setData_nasc(String data_nasc) {
         this.data_nasc = data_nasc;
     }
-    
+ 
+    @Override 
+    public String toString(){
+        return this.getNome();
+    }
 }

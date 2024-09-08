@@ -2,36 +2,39 @@ package br.com.clinicaxuliapoo.model;
 import java.util.Date;
 
 public class Veterinario{
-    private String cpf;
-    private String nome;
-    private String email;
-    private String senha;
-    private String telefone;
-    private String endereco;
-    private Date data_nasc;
-    private int crmv;
-    boolean disponibilidade;
-    private float salario;
+   private String crmv;
+   private String nome;
+   private String email;
+   private String senha;
+   private String telefone;
+   private String endereco;
+   private String cpf;
+   private Date data_nascimento;
+   private boolean disponibilidade;
+   private float salario;
 
-    public Veterinario(String cpf, String nome, String email, String senha, String telefone, String endereco, Date data_nasc, int crmv, boolean disponibilidade, float salario) {
-        this.cpf = cpf;
+    public Veterinario() {
+    }
+
+    public Veterinario(String crmv, String nome, String email, String senha, String telefone, String endereco, String cpf, Date data_nascimento, boolean disponibilidade, float salario) {
+        this.crmv = crmv;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.telefone = telefone;
         this.endereco = endereco;
-        this.data_nasc = data_nasc;
-        this.crmv = crmv;
+        this.cpf = cpf;
+        this.data_nascimento = data_nascimento;
         this.disponibilidade = disponibilidade;
         this.salario = salario;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getCrmv() {
+        return crmv;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCrmv(String crmv) {
+        this.crmv = crmv;
     }
 
     public String getNome() {
@@ -74,20 +77,20 @@ public class Veterinario{
         this.endereco = endereco;
     }
 
-    public Date getData_nasc() {
-        return data_nasc;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setData_nasc(Date data_nasc) {
-        this.data_nasc = data_nasc;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public int getCrmv() {
-        return crmv;
+    public Date getData_nascimento() {
+        return data_nascimento;
     }
 
-    public void setCrmv(int crmv) {
-        this.crmv = crmv;
+    public void setData_nascimento(Date data_nascimento) {
+        this.data_nascimento = data_nascimento;
     }
 
     public boolean isDisponibilidade() {
@@ -106,4 +109,8 @@ public class Veterinario{
         this.salario = salario;
     }
 
+    @Override
+    public String toString(){
+        return this.getNome();
+    }
 }

@@ -86,4 +86,8 @@ public class Pet {
         this.sexo = sexo;
     }
     
+    @Override
+    public String toString(){
+        return this.getNome_pet();
+    }
 }

@@ -169,6 +169,11 @@ public class MenuCliente extends javax.swing.JFrame {
         });
 
         itemMarcarConsulta.setText("Marcar Consulta");
+        itemMarcarConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemMarcarConsultaActionPerformed(evt);
+            }
+        });
         menuConsultas.add(itemMarcarConsulta);
 
         itemHistorico.setText("Histórico de Consultas");
@@ -289,20 +294,34 @@ public class MenuCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_menuVacinasMouseClicked
 
     private void menuAgendamentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAgendamentosMouseClicked
-        // TODO add your handling code here:
+        VisualizarAgendamentos visuAg = new VisualizarAgendamentos();
+        telaFundo.add(visuAg);
+        visuAg.setVisible(true);
     }//GEN-LAST:event_menuAgendamentosMouseClicked
 
     private void itemHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemHistoricoActionPerformed
-        // TODO add your handling code here:
+        HistoricoConsultas histCon = new HistoricoConsultas();
+        telaFundo.add(histCon);
+        histCon.setVisible(true);
     }//GEN-LAST:event_itemHistoricoActionPerformed
 
     private void itemMarcaVacinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMarcaVacinaActionPerformed
-        // TODO add your handling code here:
+        MarcarVacina marcVac = new MarcarVacina();
+        telaFundo.add(marcVac);
+        marcVac.setVisible(true);
     }//GEN-LAST:event_itemMarcaVacinaActionPerformed
 
     private void itemCarteirasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCarteirasActionPerformed
-        // TODO add your handling code here:
+        MinhasCarteiras mCart = new MinhasCarteiras();
+        telaFundo.add(mCart);
+        mCart.setVisible(true);
     }//GEN-LAST:event_itemCarteirasActionPerformed
+
+    private void itemMarcarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMarcarConsultaActionPerformed
+        MarcarConsulta  marcaCon = new MarcarConsulta();
+        telaFundo.add(marcaCon);
+        marcaCon.setVisible(true);
+    }//GEN-LAST:event_itemMarcarConsultaActionPerformed
 
     /**
      * @param args the command line arguments
