@@ -1,5 +1,6 @@
 package br.com.clinicaxuliapoo.dao;
 
+import br.com.clinicaxuliapoo.model.Consulta;
 import br.com.clinicaxuliapoo.model.ModuloConexao;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -7,14 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class Agendamento {
+public class ConsultaDAO {
     
     private Connection conexao;
     int rowsAffected;
     List<String> nomePet = new ArrayList<>();
+    List<Consulta> consultas = new ArrayList<>();
 
     
-    public Agendamento(){
+    public ConsultaDAO(){
             try {
             conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_vetclin_xulia", "root", "M!ch$#l,Sh##n<3");
         } catch (SQLException e) {
@@ -125,6 +127,61 @@ public class Agendamento {
             JOptionPane.showMessageDialog(null,"erro buscar cliente por nome:"+e);
         }
         return  null;
+    }
+    
+    public void cancelarConsulta(int idConsulta){
+        String sql = "update tb_consultas set status = ? where idConsulta = ?";
+        
+        conexao = ModuloConexao.conector();
+        
+        try {
+            PreparedStatement psmt = conexao.prepareStatement(sql);
+            
+            psmt.setString(1, "Cancelado");
+            psmt.setInt(2, idConsulta);
+            
+            int rowsUpdated = psmt.executeUpdate();
+            
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null,"Consulta cancelada com sucesso!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Erro cancelar consulta:"+e);
+        }
+    }
+    
+    public List<Consulta> listarConsultas(){
+        String sql = "select * from tb_consultas";
+        
+        conexao = ModuloConexao.conector();
+        
+        try {
+            PreparedStatement psmt = conexao.prepareStatement(sql);
+            ResultSet rs = psmt.executeQuery();
+            
+            while (rs.next()) {
+                Consulta consulta = new Consulta();
+                consulta.setIdConsulta(rs.getInt("idConsulta"));
+                Timestamp timestamp = rs.getTimestamp("data_consulta");
+                
+                if(timestamp != null){
+                    LocalDateTime dataConsulta = timestamp.toLocalDateTime();
+                    consulta.setDataHora(dataConsulta);
+                }
+                
+                consulta.setIdVeterinario(rs.getString("idVeterinario"));
+                consulta.setIdCliente(rs.getString("idCliente"));
+                consulta.setIdPet(rs.getInt("idPet"));
+                consulta.setStatus(rs.getString("status"));
+                
+                consultas.add(consulta);
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"erro lista con:"+e);
+        }
+        
+        return consultas;
     }
     
     

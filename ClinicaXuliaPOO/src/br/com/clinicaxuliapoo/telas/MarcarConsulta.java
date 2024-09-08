@@ -1,11 +1,10 @@
 package br.com.clinicaxuliapoo.telas;
 
-import br.com.clinicaxuliapoo.dao.Agendamento;
+import br.com.clinicaxuliapoo.dao.ConsultaDAO;
 import br.com.clinicaxuliapoo.dao.ClienteDAO;
 import br.com.clinicaxuliapoo.dao.VeterinarioDAO;
 import br.com.clinicaxuliapoo.model.Veterinario;
 import br.com.clinicaxuliapoo.model.Cliente;
-import br.com.clinicaxuliapoo.model.Pet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -21,7 +20,7 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
      * Creates new form MarcarConsulta
      */
     
-    private Agendamento consultaDAO = new Agendamento();
+    private ConsultaDAO consultaDAO = new ConsultaDAO();
     
     public MarcarConsulta() {
         super("Marcar Consulta",true,true,true,true);
@@ -131,9 +130,6 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(194, 194, 194)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -161,9 +157,12 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(cbxVets, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
-                        .addComponent(btnMarcarConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(203, Short.MAX_VALUE))
+                        .addGap(137, 137, 137)
+                        .addComponent(btnMarcarConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(jLabel1)))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,9 +190,9 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(btnMarcarConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(34, 34, 34))
         );
 
         pack();
@@ -212,7 +211,7 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbxPetAncestorAdded
 
     private void btnMarcarConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarConsultaActionPerformed
-        agendarConsulta();
+        marcarConsulta();
     }//GEN-LAST:event_btnMarcarConsultaActionPerformed
 
     private void cbxDonoPetAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbxDonoPetAncestorAdded
@@ -280,7 +279,7 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
        }
    }
    
-   private void agendarConsulta(){
+   private void marcarConsulta(){
        Veterinario nomeVet = (Veterinario) cbxVets.getSelectedItem();
        String nomeVetConvertido = nomeVet.toString();
        
@@ -288,7 +287,6 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
        String nomeDonoConvertido = nomeDono.toString();
        
        String nomePet = (String) cbxPet.getSelectedItem();
-      // String nomePetConvertido = nomePet.toString();
        
        Date dataSelecionada = dcConsulta.getDate();
        String horaTxt = txtHora.getText();
@@ -320,12 +318,21 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
            
            if (sucesso) {
                JOptionPane.showMessageDialog(this,"Consulta marcada com sucesso!");
+               limparCampos();
            } else {
                JOptionPane.showMessageDialog(this,"Falha ao marcar consulta.");
            }
        } catch (Exception e) {
            JOptionPane.showMessageDialog(null,"erro agendar consulta:"+e);
        }
+   }
+   
+   private void limparCampos(){
+       cbxVets.setSelectedItem(null);
+       cbxDonoPet.setSelectedItem(null);
+       cbxVets.setSelectedItem(null);
+       dcConsulta.setDate(null);
+       txtHora.setText("");
    }
    
    
