@@ -21,7 +21,7 @@ public class PetsPerfil extends javax.swing.JInternalFrame {
     ResultSet rs = null;
     
     public PetsPerfil() {
-        super("Editar Pets",true,true,true,true);
+        super("Editar Pets",false,true,true,true);
         initComponents();
         conexao = ModuloConexao.conector();
         listarPets();

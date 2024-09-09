@@ -16,7 +16,7 @@ public class VisualizarAgendamentos extends javax.swing.JInternalFrame {
 
     
     public VisualizarAgendamentos() {
-        super("Agendamentos",true,true,true);
+        super("Agendamentos",false,true,true,true);
         initComponents();
     }
 

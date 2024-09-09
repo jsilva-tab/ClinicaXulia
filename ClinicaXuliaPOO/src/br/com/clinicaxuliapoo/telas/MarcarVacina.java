@@ -1,15 +1,12 @@
 package br.com.clinicaxuliapoo.telas;
 
-/**
- *
- * @author J. Silva
- */
 public class MarcarVacina extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form MarcarVacina
      */
     public MarcarVacina() {
+        super("Marcar Vacinação",false,true,true,true);
         initComponents();
     }
 

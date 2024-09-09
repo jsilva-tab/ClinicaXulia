@@ -29,7 +29,7 @@ public class HistoricoConsultas extends javax.swing.JInternalFrame {
     private DateTimeFormatter dateTimeFormatter;
             
     public HistoricoConsultas() {
-        super("Histórico de Consultas",true,true,true);
+        super("Histórico de Consultas",false,true,true,true);
         initComponents();
         conexao = ModuloConexao.conector();
         listarConsultas();
