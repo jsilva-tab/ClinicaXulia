@@ -22,48 +22,52 @@ public class PasswordResetService {
                 stmt.setTimestamp(3, expirationTime);
                 stmt.executeUpdate();
             }
-
             sendEmail(userEmail, pincode);
         } catch (SQLException e) {
             e.printStackTrace();
+            // Adicione tratamento de exceções apropriado
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            // Adicione tratamento de exceções apropriado
         }
     }
 
     private String generatePincode() {
         Random random = new Random();
-        int pincode = 100000 + random.nextInt(900000);
+        int pincode = 100000 + random.nextInt(900000); // Gera um pincode de 6 dígitos
         return String.valueOf(pincode);
     }
 
-    private void sendEmail(String to, String pincode) {
-        String from = "your-email@example.com";
+    private void sendEmail(String userEmail, String pincode) throws MessagingException {
         String host = "smtp.example.com";
-        final String username = "your-email@example.com";
+        final String user = "your-email@example.com";
         final String password = "your-email-password";
 
-        Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", host);
-        properties.setProperty("mail.smtp.auth", "true");
-        properties.setProperty("mail.smtp.port", "587");
-        properties.setProperty("mail.smtp.starttls.enable", "true");
+        Properties props = new Properties();
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.auth", "true");
 
-        Session session = Session.getDefaultInstance(properties, new Authenticator() {
+        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
+                return new PasswordAuthentication(user, password);
             }
         });
 
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(from));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject("Password Reset Request");
-            message.setText("Your password reset code is: " + pincode);
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(user));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
+        message.setSubject("Password Reset");
+        message.setText("Your password reset pincode is: " + pincode);
 
-            Transport.send(message);
-            System.out.println("Sent message successfully....");
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
-        }
+        Transport.send(message);
     }
 }
+
+/* 
+Considerações Finais
+
+
+Segurança: Mova as credenciais do banco de dados e do e-mail para variáveis de ambiente ou um arquivo de configuração seguro.
+Tratamento de Exceções: Adicione tratamento de exceções mais robusto para lidar com possíveis erros.
+Envio de E-mail: Certifique-se de que o envio de e-mail está configurado corretamente e que as credenciais do e-mail são seguras.
+*/ 
