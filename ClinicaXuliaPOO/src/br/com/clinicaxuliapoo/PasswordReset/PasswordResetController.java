@@ -1,22 +1,25 @@
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@RestController
-@RequestMapping("/api")
-public class PasswordResetController {
+@WebServlet("/api/forgot-password")
+public class PasswordResetController extends HttpServlet {
 
-    @Autowired
-    private PasswordResetService passwordResetService;
+    private PasswordResetService passwordResetService = new PasswordResetService();
 
-    @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
-        try {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email");
+        if (email != null && !email.isEmpty()) {
             passwordResetService.sendPasswordResetEmail(email);
-            return ResponseEntity.ok("Password reset email sent.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error sending password reset email.");
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write("Password reset email sent.");
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("Email parameter is missing.");
         }
     }
 }

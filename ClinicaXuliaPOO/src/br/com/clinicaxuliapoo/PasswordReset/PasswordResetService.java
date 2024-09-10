@@ -62,12 +62,3 @@ public class PasswordResetService {
         Transport.send(message);
     }
 }
-
-/* 
-Considerações Finais
-
-
-Segurança: Mova as credenciais do banco de dados e do e-mail para variáveis de ambiente ou um arquivo de configuração seguro.
-Tratamento de Exceções: Adicione tratamento de exceções mais robusto para lidar com possíveis erros.
-Envio de E-mail: Certifique-se de que o envio de e-mail está configurado corretamente e que as credenciais do e-mail são seguras.
-*/ 
