@@ -1,23 +1,22 @@
 package br.com.clinicaxuliapoo.telas;
 
+import br.com.clinicaxuliapoo.dao.AgendamentoDAO;
+import br.com.clinicaxuliapoo.model.Carteira;
+import br.com.clinicaxuliapoo.model.Consulta;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author J. Silva
- */
 public class VisualizarAgendamentos extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form VisualizarAgendamentos
-     */
-    
-
-    
-
+    AgendamentoDAO agendamentoDAO = new AgendamentoDAO();
     
     public VisualizarAgendamentos() {
         super("Agendamentos",false,true,false,true);
         initComponents();
+        carregarConsultasPendentes();
+        carregarVacinacoesPendentes();
     }
 
     /**
@@ -30,25 +29,67 @@ public class VisualizarAgendamentos extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaVisuCon = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabelaVisuVac = new javax.swing.JTable();
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 0, 204));
         jLabel1.setText("Agendamentos");
 
+        tabelaVisuCon.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 10)); // NOI18N
+        tabelaVisuCon.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "IDConsulta", "Data", "Veterinário", "Dono", "Pet", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(tabelaVisuCon);
+
+        tabelaVisuVac.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 10)); // NOI18N
+        tabelaVisuVac.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "IDPet", "NomePet", "Vacina", "Data", "Status"
+            }
+        ));
+        jScrollPane2.setViewportView(tabelaVisuVac);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(199, 199, 199)
+                .addGap(231, 231, 231)
                 .addComponent(jLabel1)
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addGap(242, 242, 242))
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
-                .addContainerGap(362, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -57,7 +98,48 @@ public class VisualizarAgendamentos extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tabelaVisuCon;
+    private javax.swing.JTable tabelaVisuVac;
     // End of variables declaration//GEN-END:variables
+    
+    private void carregarConsultasPendentes(){
+        List<Consulta> consultasPendentes = agendamentoDAO.listarConsultasPendentes();
+        DefaultTableModel model = (DefaultTableModel) tabelaVisuCon.getModel();
+        model.setRowCount(0); // Limpar tabela
+        for (Consulta consulta : consultasPendentes) {
+            model.addRow(new Object[]{
+                consulta.getIdConsulta(),
+                consulta.getDataHora(),
+                consulta.getIdVeterinario(),
+                consulta.getIdCliente(),
+                consulta.getIdPet(),
+                consulta.getStatus()
+            });
+        }
+    }
+    
+    private void carregarVacinacoesPendentes() {
+    try {
+        List<Carteira> vacinacoesPendentes = agendamentoDAO.listarVacinacoesPendentes();
+        DefaultTableModel model = (DefaultTableModel) tabelaVisuVac.getModel();
+        model.setRowCount(0); // Limpar tabela
 
-
+        for (Carteira carteira : vacinacoesPendentes) {
+            System.out.println("Adicionando pet: " + carteira.getNomePet());
+            model.addRow(new Object[]{
+                    carteira.getIdPet(),
+                    carteira.getNomePet(),
+                    carteira.getNomeVacina(),
+                    carteira.getDataAplicacao(),
+                    carteira.getStatus()
+            });
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Erro ao carregar vacinações pendentes: " + e.getMessage());
+    }
+    }
+    
+    
 }
