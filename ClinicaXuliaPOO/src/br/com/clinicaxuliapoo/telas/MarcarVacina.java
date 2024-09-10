@@ -1,13 +1,37 @@
 package br.com.clinicaxuliapoo.telas;
 
+import br.com.clinicaxuliapoo.dao.CarteiraDAO;
+import br.com.clinicaxuliapoo.dao.PetDAO;
+import br.com.clinicaxuliapoo.dao.VacinaDAO;
+import br.com.clinicaxuliapoo.model.Pet;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Component;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 public class MarcarVacina extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form MarcarVacina
      */
+    private JComboBox<String> comboPets;
+    private JDateChooser dataVacinaChooser;
+    private JTextField horaTextField;
+    VacinaDAO vacinaDao = new VacinaDAO();
+
+    
     public MarcarVacina() {
-        super("Marcar Vacinação",false,true,true,true);
+        super("Marcar Vacinação",false,true,false,true);
         initComponents();
+        carregarPets();
+        carregarVacinas();
     }
 
     /**
@@ -19,23 +43,206 @@ public class MarcarVacina extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setPreferredSize(new java.awt.Dimension(544, 376));
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        cbxVacina = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        cbxPets = new javax.swing.JComboBox();
+        dcAplicacaoVacina = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        btnMarcarVac = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtHora = new javax.swing.JFormattedTextField();
+
+        setPreferredSize(new java.awt.Dimension(394, 298));
+
+        jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(153, 0, 204));
+        jLabel1.setText("Vacinação");
+
+        jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 12)); // NOI18N
+        jLabel2.setText("Vacina:");
+
+        jLabel3.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 12)); // NOI18N
+        jLabel3.setText("Pet:");
+
+        cbxPets.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPetsActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 12)); // NOI18N
+        jLabel4.setText("Hora:");
+
+        btnMarcarVac.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
+        btnMarcarVac.setText("Marcar Vacina");
+        btnMarcarVac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMarcarVacActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 12)); // NOI18N
+        jLabel5.setText("Data:");
+
+        txtHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 532, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(23, 23, 23)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbxPets, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(dcAplicacaoVacina, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbxVacina, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(154, 154, 154)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(btnMarcarVac)))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 340, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(cbxVacina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(cbxPets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dcAplicacaoVacina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(btnMarcarVac)
+                .addGap(44, 44, 44))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnMarcarVacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarVacActionPerformed
+        marcarVacinacao();
+    }//GEN-LAST:event_btnMarcarVacActionPerformed
+
+    private void cbxPetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPetsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxPetsActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMarcarVac;
+    private javax.swing.JComboBox cbxPets;
+    private javax.swing.JComboBox cbxVacina;
+    private com.toedter.calendar.JDateChooser dcAplicacaoVacina;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JFormattedTextField txtHora;
     // End of variables declaration//GEN-END:variables
+
+    private void carregarVacinas(){
+        try {
+            List<String> lista = vacinaDao.listarVacina();
+        
+            for(String v : lista){
+               cbxVacina.addItem(v);
+        }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"erro carregar vacinas;"+e);
+        }
+    }
+    
+    private void carregarPets(){
+        try {
+            PetDAO petDao = new PetDAO();
+            ArrayList<Pet> lista = petDao.pesquisarPets();
+            
+            for(Pet p : lista){
+                cbxPets.addItem(p);
+            }
+            
+            cbxPets.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            if (value instanceof Pet) {
+            value = ((Pet) value).getNome_pet();  // Mostra o nome do Pet
+        }
+        return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+    }
+});
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"erro carregar pets :"+e);
+        }
+    
+    }
+    
+    private void marcarVacinacao(){
+    // Obtendo o objeto Pet do JComboBox
+    Pet petSelecionado = (Pet) cbxPets.getSelectedItem();  // Sem fazer cast para String
+    
+    // Acessa o ID do pet diretamente do objeto
+    int idPet = petSelecionado.getIdPet();
+    
+    // Pega a data selecionada do JDateChooser
+    LocalDate dataVacina = new java.sql.Date(dcAplicacaoVacina.getDate().getTime()).toLocalDate();
+    
+    String hora = txtHora.getText();
+    
+    // Captura a vacina selecionada no JComboBox
+    String vacinaSelecionada = (String) cbxVacina.getSelectedItem();
+    
+    // Bloco try-catch para lidar com sucesso ou erro
+    try {
+        boolean sucesso = vacinaDao.marcarVacina(idPet, vacinaSelecionada, dataVacina, hora);
+        
+        if (sucesso) {
+            // Mensagem de confirmação
+            JOptionPane.showMessageDialog(this, "Vacinação marcada com sucesso!");
+        } else {
+            // Caso a operação não seja bem-sucedida
+            JOptionPane.showMessageDialog(this, "Não foi possível marcar a vacinação. Tente novamente.");
+        }
+    } catch (Exception e) {
+        // Mensagem de erro em caso de exceção
+        JOptionPane.showMessageDialog(this, "Ocorreu um erro ao marcar a vacinação: " + e.getMessage());
+        e.printStackTrace();  // Para fins de depuração
+    }
+  }
+    
+    
 }

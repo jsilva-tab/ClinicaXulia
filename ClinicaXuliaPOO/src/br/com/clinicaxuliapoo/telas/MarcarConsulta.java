@@ -23,7 +23,7 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
     private ConsultaDAO consultaDAO = new ConsultaDAO();
     
     public MarcarConsulta() {
-        super("Marcar Consulta",true,true,true,true);
+        super("Marcar Consulta",true,true,false,true);
         initComponents();
         preencherCBX();
     }

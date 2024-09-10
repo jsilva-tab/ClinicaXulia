@@ -42,8 +42,8 @@ public class VacinaDAO {
         return vacinas;
     }
     
-    public void marcarVacina(int idPet, String nomeVac, LocalDate dataVacina, String hora){
-        String sql = "insert into tb_vacinas_aplicadas (idPet, idVacina, data_hora) values (?,(select idVacina from tb_vacinas where nome_vac = ?), ?)";
+    public boolean marcarVacina(int idPet, String nomeVac, LocalDate dataVacina, String hora){
+        String sql = "insert into tb_vacinas_aplicadas (idPet, idVacina, data_aplicacao,status) values (?,(select idVacina from tb_vacinas where nome_vac = ?), ?,?)";
         
         try {
             PreparedStatement psmt = conexao.prepareStatement(sql);
@@ -51,12 +51,18 @@ public class VacinaDAO {
             psmt.setInt(1,idPet);
             psmt.setString(2,nomeVac);
             psmt.setString(3, dataVacina + " " + hora);
-            psmt.executeUpdate();
+            psmt.setString(4,"pendente");
+            int rowsAffected = psmt.executeUpdate();
+            
+            return rowsAffected > 0;
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "erro marcar vacina:"+e);
+            return false;
         }
+
     }
     
+
     
 }

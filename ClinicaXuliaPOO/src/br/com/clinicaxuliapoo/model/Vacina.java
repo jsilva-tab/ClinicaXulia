@@ -69,5 +69,5 @@ public class Vacina {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
 }

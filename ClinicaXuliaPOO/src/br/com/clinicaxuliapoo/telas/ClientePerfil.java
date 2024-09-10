@@ -16,7 +16,7 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
     ResultSet rs = null;
 
     public ClientePerfil(){
-        super("Editar Perfil",false,true,true,true);
+        super("Editar Perfil",false,true,false,true);
         
         initComponents();
     }

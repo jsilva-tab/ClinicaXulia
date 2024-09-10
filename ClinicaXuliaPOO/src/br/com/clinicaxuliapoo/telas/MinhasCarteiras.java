@@ -6,10 +6,9 @@ import br.com.clinicaxuliapoo.model.ModuloConexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
 
 public class MinhasCarteiras extends javax.swing.JInternalFrame {
 
@@ -22,10 +21,30 @@ public class MinhasCarteiras extends javax.swing.JInternalFrame {
 
     
     public MinhasCarteiras() {
-        super("Minhas Carteiras",false,true,true,true);
+        super("Minhas Carteiras",false,true,false,true);
         initComponents();
         conexao = ModuloConexao.conector();
-        listarCarteiras();
+        
+    CarteiraDAO carteiraDAO = new CarteiraDAO();
+    List<Carteira> carteirasRealizadas = null;
+    try {
+        carteirasRealizadas = carteiraDAO.listarVacinasAplicadas();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    if (carteirasRealizadas != null) {
+        DefaultTableModel model = (DefaultTableModel) tabelaVisuCarteiras.getModel();
+        for (Carteira carteira : carteirasRealizadas) {
+            model.addRow(new Object[]{
+                carteira.getIdPet(),
+                carteira.getNomePet(),
+                carteira.getNomeVacina(),
+                carteira.getDataAplicacao(),
+                carteira.getStatus()
+            });
+        }
+    }
     }
 
     /**
@@ -50,13 +69,13 @@ public class MinhasCarteiras extends javax.swing.JInternalFrame {
 
         tabelaVisuCarteiras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID PET", "NOME PET", "VACINA", "DATA APLICAÇÃO"
+                "ID PET", "NOME PET", "VACINA", "DATA APLICAÇÃO", "STATUS"
             }
         ));
         jScrollPane1.setViewportView(tabelaVisuCarteiras);
@@ -96,27 +115,25 @@ public class MinhasCarteiras extends javax.swing.JInternalFrame {
     private javax.swing.JTable tabelaVisuCarteiras;
     // End of variables declaration//GEN-END:variables
 
-    private void listarCarteiras(){
-      try{
-      CarteiraDAO carteiraDAO = new CarteiraDAO();
-          
-      DefaultTableModel model = (DefaultTableModel) tabelaVisuCarteiras.getModel();
-      model.setNumRows(0);
-      
-      ArrayList<Carteira> lista = carteiraDAO.pesquisarCarteira();
-      
-      for(int num=0; num<lista.size(); num++){
-           model.addRow(new Object[]{
-               lista.get(num).getIdPet(),
-               lista.get(num).getNomePet(),
-               lista.get(num).getNomeVacina(),
-               lista.get(num).getDataAplicacao()
-          });
-        }
-      
-      } catch(Exception e){
-          JOptionPane.showMessageDialog(null,"erro lista cart jif"+e);
-      }
-    }
+//    private void listarCarteiras(){
+//      try{
+//        CarteiraDAO carteiraDAO = new CarteiraDAO();
+//        List<Carteira> carteirasRealizadas = carteiraDAO.listarVacinasAplicadas(idPet);
+//
+//            DefaultTableModel model = (DefaultTableModel) tabelaVisuCarteiras.getModel();
+//            for (Carteira carteira : carteirasRealizadas) {
+//              model.addRow(new Object[]{
+//                 carteira.getNomePet(),
+//                 carteira.getNomeVacina(),
+//                 carteira.getDataAplicacao(),
+//                 carteira.getStatus()
+//        });
+//    }     
+//      
+//      } catch(Exception e){
+//          JOptionPane.showMessageDialog(null,"erro lista cart jif"+e);
+//      }
+//    }
+    
     
 }

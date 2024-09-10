@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.*;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 
@@ -54,5 +55,30 @@ public class CarteiraDAO {
         return listaCart;
     }
     
+public List<Carteira> listarVacinasAplicadas() throws SQLException {
+    String sql = "SELECT p.idPet, p.nome_pet AS nomePet, v.nome_vac AS nomeVacina, va.data_aplicacao, va.status "
+               + "FROM tb_vacinas_aplicadas va "
+               + "JOIN tb_vacinas v ON va.idVacina = v.idVacina "
+               + "JOIN tb_pets p ON va.idPet = p.idPet "
+               + "WHERE va.status = 'realizada'";
+    List<Carteira> carteiras = new ArrayList<>();
     
+    try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            Carteira carteira = new Carteira();
+            carteira.setIdPet(rs.getInt("idPet")); // Certifique-se de que está selecionando o idPet corretamente
+            carteira.setNomePet(rs.getString("nomePet"));
+            carteira.setNomeVacina(rs.getString("nomeVacina"));
+            carteira.setDataAplicacao(rs.getDate("data_aplicacao").toLocalDate());
+            carteira.setStatus(rs.getString("status"));
+            carteiras.add(carteira);
+        }
+    } 
+    return carteiras;
 }
+
+
+}
+

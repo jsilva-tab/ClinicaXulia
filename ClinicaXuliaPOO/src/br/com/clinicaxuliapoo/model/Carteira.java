@@ -7,12 +7,14 @@ public class Carteira {
         private String nomePet;
         private String nomeVacina;
         private LocalDate dataAplicacao;
+        private String status;
 
-     public Carteira(int idPet, String nomePet, String nomeVacina, LocalDate dataAplicacao) {
+     public Carteira(int idPet, String nomePet, String nomeVacina, LocalDate dataAplicacao, String status) {
             this.idPet = idPet;
             this.nomePet = nomePet;
             this.nomeVacina = nomeVacina;
             this.dataAplicacao = dataAplicacao;
+            this.status = status;
         }
         
     public Carteira(){}
@@ -49,5 +51,11 @@ public class Carteira {
         this.dataAplicacao = dataAplicacao;
     }
     
+    public String getStatus(){
+        return status;
+    }
    
+    public void setStatus(String status){
+        this.status = status;
+    }
 }
