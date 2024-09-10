@@ -1,6 +1,8 @@
 package br.com.clinicaxuliapoo.telas;
+
 import java.sql.*;
 import br.com.clinicaxuliapoo.model.ModuloConexao;
+import br.com.clinicaxuliapoo.model.SessaoUsuario;
 import javax.swing.JOptionPane;
 
 public class LoginCliente extends javax.swing.JFrame {
@@ -22,6 +24,7 @@ public class LoginCliente extends javax.swing.JFrame {
             pst.setString(2, captura);
             rs = pst.executeQuery();
             if (rs.next()) {
+                SessaoUsuario.setCpfUsuarioLogado(rs.getString("cpf_cliente"));
                 MenuCliente menucli = new MenuCliente();
                 menucli.setVisible(true);
                 MenuCliente.lblUser.setText(rs.getString(2));

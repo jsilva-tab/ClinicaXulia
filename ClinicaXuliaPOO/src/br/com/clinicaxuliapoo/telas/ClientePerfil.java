@@ -1,9 +1,15 @@
 package br.com.clinicaxuliapoo.telas;
 
+import br.com.clinicaxuliapoo.dao.ClienteDAO;
+import br.com.clinicaxuliapoo.model.Cliente;
+import br.com.clinicaxuliapoo.model.ModuloConexao;
+import br.com.clinicaxuliapoo.model.SessaoUsuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
 
 public class ClientePerfil extends javax.swing.JInternalFrame {
 
@@ -17,8 +23,9 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
 
     public ClientePerfil(){
         super("Editar Perfil",false,true,false,true);
-        
         initComponents();
+        conexao = ModuloConexao.conector();
+        preencherCamposEdicao();
     }
 
     /**
@@ -38,14 +45,14 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtSenha = new javax.swing.JPasswordField();
-        txtCPF = new javax.swing.JFormattedTextField();
-        txtTelefone = new javax.swing.JFormattedTextField();
         txtNome = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtEndereco = new javax.swing.JTextField();
-        txtDataNasc = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
+        btnAtualizarDados = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        txtCpf = new javax.swing.JFormattedTextField();
+        txtDataNascimento = new javax.swing.JFormattedTextField();
+        txtTelefone = new javax.swing.JTextField();
 
         setTitle("Perfil Cliente");
 
@@ -70,37 +77,30 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
         jLabel7.setText("Nome:");
 
-        txtCPF.setEditable(false);
-        try {
-            txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            txtDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jButton1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/atualizar.png"))); // NOI18N
-        jButton1.setText("Alterar Dados");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAtualizarDados.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        btnAtualizarDados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/atualizar.png"))); // NOI18N
+        btnAtualizarDados.setText("Atualizar Dados");
+        btnAtualizarDados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAtualizarDadosActionPerformed(evt);
             }
         });
 
         jLabel8.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 26)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(153, 0, 204));
         jLabel8.setText("Dados Cadastrais");
+
+        try {
+            txtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txtDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,7 +109,6 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel3)
@@ -126,7 +125,7 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel7)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -134,13 +133,14 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel8))
-                .addContainerGap(23, Short.MAX_VALUE))
+                            .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel8)
+                    .addComponent(btnAtualizarDados, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +150,7 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -174,21 +174,22 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAtualizarDados, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnAtualizarDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarDadosActionPerformed
+        salvarDados();
+    }//GEN-LAST:event_btnAtualizarDadosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAtualizarDados;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -197,15 +198,75 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JFormattedTextField txtCPF;
-    private javax.swing.JFormattedTextField txtDataNasc;
+    private javax.swing.JFormattedTextField txtCpf;
+    private javax.swing.JFormattedTextField txtDataNascimento;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNome;
     private javax.swing.JPasswordField txtSenha;
-    private javax.swing.JFormattedTextField txtTelefone;
+    private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 
+    
+    public void preencherCamposEdicao() {
+    String cpfUsuario = SessaoUsuario.getCpfUsuarioLogado();  // Pega o CPF do usuário logado
+    String sql = "SELECT * FROM tb_clientes WHERE cpf_cliente=?";
+    
+    try {
+        pst = conexao.prepareStatement(sql);
+        pst.setString(1, cpfUsuario);
+        rs = pst.executeQuery();
+        
+        if (rs.next()) {
+            txtNome.setText(rs.getString("nome_cliente"));
+            txtEmail.setText(rs.getString("email_cliente"));
+            txtSenha.setText(rs.getString("senha_cliente"));
+            txtTelefone.setText(rs.getString("telefone_cliente"));
+            txtEndereco.setText(rs.getString("endereco_cliente"));
+            txtDataNascimento.setText(rs.getString("data_nascimento_cliente"));
+            txtCpf.setText(rs.getString("cpf_cliente"));  // CPF não editável
+            txtCpf.setEnabled(false);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e);
+    }
+}
 
-
+    private void salvarDados(){
+        try{
+        String nome,email,senha,telefone,endereco,cpf;
+        LocalDate data_nascimento;
+        
+        cpf = txtCpf.getText();
+        nome = txtNome.getText();
+        email = txtEmail.getText();
+        senha = txtSenha.getText();
+        telefone = txtTelefone.getText();
+        endereco = txtEndereco.getText();
+        data_nascimento = LocalDate.parse(txtDataNascimento.getText());
+        
+        Cliente cliente = new Cliente();
+        cliente.setCpf(cpf);
+        cliente.setNome(nome);
+        cliente.setEmail(email);
+        cliente.setSenha(senha);
+        cliente.setTelefone(telefone);
+        cliente.setEndereco(endereco);
+        cliente.setData_nasc(data_nascimento);
+        
+        ClienteDAO clienteDao = new ClienteDAO();
+        
+        try{
+        clienteDao.atualizarCliente(cliente);
+        JOptionPane.showMessageDialog(this,"Dados atualizados com sucesso.");
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null,"erro ao atualizar:"+e);
+        }
+        
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null,"erro atualizar jif:"+e);
+        }
+    }
+    
+    
 }

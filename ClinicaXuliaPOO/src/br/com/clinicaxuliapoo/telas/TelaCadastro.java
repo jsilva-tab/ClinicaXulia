@@ -1,15 +1,12 @@
 package br.com.clinicaxuliapoo.telas;
 
-/**
- *
- * @author J. Silva
- */
-
 import br.com.clinicaxuliapoo.dao.CadastrarClientePet;
 import br.com.clinicaxuliapoo.model.Cliente;
 import br.com.clinicaxuliapoo.model.Pet;
 import java.sql.*;
 import br.com.clinicaxuliapoo.model.ModuloConexao;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 public class TelaCadastro extends javax.swing.JFrame {
@@ -190,10 +187,11 @@ public class TelaCadastro extends javax.swing.JFrame {
         }
 
         try {
-            txtDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            txtDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtDataNasc.setToolTipText("aaaa-mm-dd");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -354,7 +352,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                 String senha = txtSenha.getText();
                 String telefone = txtTelefone.getText();
                 String endereco = txtEndereco.getText();
-                String data_nasc = txtDataNasc.getText();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate data_nasc = LocalDate.parse(txtDataNasc.getText(), formatter);
                 
                 String nomePet = txtNomePet.getText();
                 String especie = txtEspecie.getText();

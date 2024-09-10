@@ -23,7 +23,7 @@ public class CadastrarClientePet {
             pstmt.setString(4, cliente.getSenha());
             pstmt.setString(5, cliente.getTelefone());
             pstmt.setString(6, cliente.getEndereco());
-            pstmt.setString(7, cliente.getData_nasc());
+            pstmt.setString(7, cliente.getData_nasc().toString());
 
             pstmt.executeUpdate();
         }

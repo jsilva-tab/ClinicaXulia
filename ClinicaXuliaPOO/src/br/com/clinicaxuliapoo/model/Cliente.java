@@ -1,5 +1,7 @@
 package br.com.clinicaxuliapoo.model;
 
+import java.time.LocalDate;
+
 public class Cliente{
     private String cpf;
     private String nome;
@@ -7,9 +9,12 @@ public class Cliente{
     private String senha;
     private String telefone;
     private String endereco;
-    private String data_nasc;
+    private LocalDate data_nasc;
 
-    public Cliente(String cpf, String nome, String email, String senha, String telefone, String endereco, String data_nasc) {
+    public Cliente() {
+    }
+
+    public Cliente(String cpf, String nome, String email, String senha, String telefone, String endereco, LocalDate data_nasc) {
         this.cpf = cpf;
         this.nome = nome;
         this.email = email;
@@ -18,8 +23,6 @@ public class Cliente{
         this.endereco = endereco;
         this.data_nasc = data_nasc;
     }
-    
-    public Cliente(){}
 
     public String getCpf() {
         return cpf;
@@ -69,13 +72,14 @@ public class Cliente{
         this.endereco = endereco;
     }
 
-    public String getData_nasc() {
+    public LocalDate getData_nasc() {
         return data_nasc;
     }
 
-    public void setData_nasc(String data_nasc) {
+    public void setData_nasc(LocalDate data_nasc) {
         this.data_nasc = data_nasc;
     }
+
  
     @Override 
     public String toString(){
