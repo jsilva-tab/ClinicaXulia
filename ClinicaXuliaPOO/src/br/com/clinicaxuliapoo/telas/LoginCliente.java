@@ -43,20 +43,14 @@ public class LoginCliente extends javax.swing.JFrame {
         telcad.setVisible(true);
         this.dispose();
     }
-    
-    public void entrarVet(){
-        LoginVeterinario lognvet = new LoginVeterinario();
-        lognvet.setVisible(true);
-        this.dispose();
-    }
+
     
     public void entrarAdmin(){
         LoginAdministrador lognadm = new LoginAdministrador();
         lognadm.setVisible(true);
         this.dispose();
     }
-    
-    public void esqueciSenha(){}
+
     
     public LoginCliente() {
         initComponents();
@@ -84,9 +78,6 @@ public class LoginCliente extends javax.swing.JFrame {
         botao_login = new javax.swing.JButton();
         botao_cad = new javax.swing.JButton();
         label_status = new javax.swing.JLabel();
-        vetlog = new javax.swing.JLabel();
-        esqueceu_senha = new javax.swing.JButton();
-        logvet = new javax.swing.JButton();
         logadm = new javax.swing.JButton();
         campo_login = new javax.swing.JFormattedTextField();
 
@@ -124,27 +115,7 @@ public class LoginCliente extends javax.swing.JFrame {
         label_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/database_sucess.png"))); // NOI18N
         label_status.setText("status");
 
-        vetlog.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        esqueceu_senha.setText("Esqueci minha senha.");
-        esqueceu_senha.setBorder(null);
-        esqueceu_senha.setBorderPainted(false);
-        esqueceu_senha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        esqueceu_senha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                esqueceu_senhaActionPerformed(evt);
-            }
-        });
-
-        logvet.setText("Entrar como Veterinário.");
-        logvet.setBorder(null);
-        logvet.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        logvet.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logvetActionPerformed(evt);
-            }
-        });
-
+        logadm.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 12)); // NOI18N
         logadm.setText("Entrar como Admin.");
         logadm.setBorder(null);
         logadm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -165,16 +136,9 @@ public class LoginCliente extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(vetlog)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(logvet)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(logadm)
-                        .addGap(43, 43, 43))))
+                .addContainerGap(184, Short.MAX_VALUE)
+                .addComponent(logadm)
+                .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,9 +149,6 @@ public class LoginCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                         .addComponent(label_status, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(esqueceu_senha)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(campo_login)
@@ -207,19 +168,13 @@ public class LoginCliente extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campo_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(esqueceu_senha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botao_login, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botao_cad, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_status))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(vetlog)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(logvet)
-                    .addComponent(logadm))
+                .addGap(24, 24, 24)
+                .addComponent(logadm)
                 .addContainerGap(52, Short.MAX_VALUE))
         );
 
@@ -236,17 +191,9 @@ public class LoginCliente extends javax.swing.JFrame {
         cadastrar();
     }//GEN-LAST:event_botao_cadActionPerformed
 
-    private void logvetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logvetActionPerformed
-        entrarVet();
-    }//GEN-LAST:event_logvetActionPerformed
-
     private void logadmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logadmActionPerformed
         entrarAdmin();
     }//GEN-LAST:event_logadmActionPerformed
-
-    private void esqueceu_senhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_esqueceu_senhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_esqueceu_senhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,12 +236,9 @@ public class LoginCliente extends javax.swing.JFrame {
     private javax.swing.JButton botao_login;
     private javax.swing.JFormattedTextField campo_login;
     private javax.swing.JPasswordField campo_senha;
-    private javax.swing.JButton esqueceu_senha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel label_status;
     private javax.swing.JButton logadm;
-    private javax.swing.JButton logvet;
-    private javax.swing.JLabel vetlog;
     // End of variables declaration//GEN-END:variables
 }

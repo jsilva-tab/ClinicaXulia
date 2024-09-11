@@ -80,7 +80,6 @@ public class Cliente{
         this.data_nasc = data_nasc;
     }
 
- 
     @Override 
     public String toString(){
         return this.getNome();

@@ -264,7 +264,6 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
        Cliente nomeDono = (Cliente) cbxDonoPet.getSelectedItem();
        String nomeDonoConvertido = nomeDono.toString();
        
-       
        try {
            List<String> listaPet = consultaDAO.buscarPetPorNomeDono(nomeDonoConvertido);
            
@@ -280,13 +279,25 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
    }
    
    private void marcarConsulta(){
-       Veterinario nomeVet = (Veterinario) cbxVets.getSelectedItem();
-       String nomeVetConvertido = nomeVet.toString();
-       
-       Cliente nomeDono = (Cliente) cbxDonoPet.getSelectedItem();
-       String nomeDonoConvertido = nomeDono.toString();
-       
-       String nomePet = (String) cbxPet.getSelectedItem();
+    Veterinario nomeVet = (Veterinario) cbxVets.getSelectedItem();
+    if (nomeVet == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, selecione um veterinário.");
+        return;
+    }
+    String nomeVetConvertido = nomeVet.toString();
+
+    Cliente nomeDono = (Cliente) cbxDonoPet.getSelectedItem();
+    if (nomeDono == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, selecione o dono do pet.");
+        return;
+    }
+    String nomeDonoConvertido = nomeDono.toString();
+
+    String nomePet = (String) cbxPet.getSelectedItem();
+    if (nomePet == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, selecione um pet.");
+        return;
+    }
        
        Date dataSelecionada = dcConsulta.getDate();
        String horaTxt = txtHora.getText();
@@ -318,21 +329,12 @@ public class MarcarConsulta extends javax.swing.JInternalFrame {
            
            if (sucesso) {
                JOptionPane.showMessageDialog(this,"Consulta marcada com sucesso!");
-               limparCampos();
            } else {
                JOptionPane.showMessageDialog(this,"Falha ao marcar consulta.");
            }
        } catch (Exception e) {
-           JOptionPane.showMessageDialog(null,"erro agendar consulta:"+e);
+           JOptionPane.showMessageDialog(null,"erro agendar consulta jif:"+e);
        }
-   }
-   
-   private void limparCampos(){
-       cbxVets.setSelectedItem(null);
-       cbxDonoPet.setSelectedItem(null);
-       cbxVets.setSelectedItem(null);
-       dcConsulta.setDate(null);
-       txtHora.setText("");
    }
    
    

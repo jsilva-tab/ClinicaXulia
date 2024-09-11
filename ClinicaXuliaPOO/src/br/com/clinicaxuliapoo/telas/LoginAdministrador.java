@@ -13,27 +13,27 @@ public class LoginAdministrador extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     
-//    public void logar() {
-//        String sql = "select * from tb_admin where login_admin=? and senha_admin=?";
-//        try {
-//            pst = conexao.prepareStatement(sql);
-//            pst.setString(1, campo_login.getText());
-//            pst.setString(2, campo_senha.getText());
-//            rs = pst.executeQuery();
-//            if (rs.next()) {
-//                MenuAdministrador menuadm = new MenuAdministrador();
-//                menuadm.setVisible(true);
-//                MenuAdministrador.lblUser.setText(rs.getString(1));
-//                this.dispose();
-//                conexao.close(); 
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Login ou Senha inválidos.");
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(null, e);
-//        }
-//    }
-//    
+    public void logar() {
+        String sql = "select * from tb_admin where login_admin=? and senha_admin=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, campo_login.getText());
+            pst.setString(2, campo_senha.getText());
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                MenuAdmin menuadm = new MenuAdmin();
+                menuadm.setVisible(true);
+                MenuAdmin.lblUser.setText(rs.getString(1));
+                this.dispose();
+                conexao.close(); 
+            } else {
+                JOptionPane.showMessageDialog(null, "Login ou Senha inválidos.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
     public void voltarLoginCliente(){
         LoginCliente lgncli = new LoginCliente();
         lgncli.setVisible(true);
@@ -43,12 +43,6 @@ public class LoginAdministrador extends javax.swing.JFrame {
     public LoginAdministrador() {
         initComponents();
         conexao = ModuloConexao.conector();
-        // apoio ao status de conexao -> System.out.println(conexao);
-        if (conexao != null) {
-            label_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/database_sucess.png")));
-        } else {
-            label_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/database_fail.png")));
-        }
     }
 
     /**
@@ -60,17 +54,12 @@ public class LoginAdministrador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         campo_login = new javax.swing.JTextField();
         campo_senha = new javax.swing.JPasswordField();
-        botao_login = new javax.swing.JButton();
-        label_status = new javax.swing.JLabel();
         botao_voltar = new javax.swing.JButton();
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/Clínica Veterinária.png"))); // NOI18N
-        jLabel3.setText("title");
+        btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clínica Veterinária Xulia's");
@@ -83,32 +72,34 @@ public class LoginAdministrador extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 24)); // NOI18N
         jLabel2.setText("Senha");
 
-        campo_login.setToolTipText("Insira seu CPF.");
+        campo_login.setToolTipText("");
         campo_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campo_loginActionPerformed(evt);
             }
         });
 
-        botao_login.setBackground(new java.awt.Color(153, 204, 255));
-        botao_login.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        botao_login.setForeground(new java.awt.Color(255, 255, 255));
-        botao_login.setText("Entrar");
-        botao_login.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botao_login.addActionListener(new java.awt.event.ActionListener() {
+        campo_senha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botao_loginActionPerformed(evt);
+                campo_senhaActionPerformed(evt);
             }
         });
-
-        label_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/database_sucess.png"))); // NOI18N
-        label_status.setText("status");
 
         botao_voltar.setText("Voltar.");
         botao_voltar.setBorder(null);
         botao_voltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botao_voltarActionPerformed(evt);
+            }
+        });
+
+        btnLogin.setBackground(new java.awt.Color(153, 204, 255));
+        btnLogin.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
+        btnLogin.setText("Entrar");
+        btnLogin.setBorder(null);
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
             }
         });
 
@@ -119,17 +110,13 @@ public class LoginAdministrador extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botao_voltar)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(botao_login, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(137, 137, 137)
-                            .addComponent(label_status, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(campo_login, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(campo_senha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(campo_login, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(campo_senha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -141,18 +128,16 @@ public class LoginAdministrador extends javax.swing.JFrame {
                 .addComponent(campo_login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campo_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botao_login, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_status))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(botao_voltar)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(351, 338));
+        setSize(new java.awt.Dimension(351, 302));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -160,13 +145,17 @@ public class LoginAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campo_loginActionPerformed
 
-    private void botao_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_loginActionPerformed
-        
-    }//GEN-LAST:event_botao_loginActionPerformed
-
     private void botao_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_voltarActionPerformed
         voltarLoginCliente();
     }//GEN-LAST:event_botao_voltarActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        logar();
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void campo_senhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_senhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campo_senhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,13 +196,11 @@ public class LoginAdministrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botao_login;
     private javax.swing.JButton botao_voltar;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JTextField campo_login;
     private javax.swing.JPasswordField campo_senha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel label_status;
     // End of variables declaration//GEN-END:variables
 }

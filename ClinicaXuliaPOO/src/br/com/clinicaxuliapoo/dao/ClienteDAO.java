@@ -89,7 +89,6 @@ public class ClienteDAO {
         return null;  // Retorna null se não encontrar o cliente
     }
 
-    // Método para atualizar os dados do cliente
     public boolean atualizarCliente(Cliente cliente){
         String sql = "UPDATE tb_clientes SET nome_cliente = ?, email_cliente = ?, senha_cliente = ?, telefone_cliente = ?, endereco_cliente = ?, data_nascimento_cliente = ? WHERE cpf_cliente = ?";
         try (Connection conn = ModuloConexao.conector();
@@ -116,5 +115,43 @@ public class ClienteDAO {
         return true;
     }
     
+    public void cadastrarCliente(Cliente cliente){
+        String sql = "insert into tb_clientes (cpf_cliente, nome_cliente, email_cliente, senha_cliente, telefone_cliente, endereco_cliente, data_nascimento_cliente) values (?,?,?,?,?,?,?)";
+        
+        try {
+            connection = ModuloConexao.conector();
+            PreparedStatement psmt = connection.prepareStatement(sql);
+            
+            psmt.setString(1,cliente.getCpf());
+            psmt.setString(2, cliente.getNome());
+            psmt.setString(3, cliente.getEmail());
+            psmt.setString(4,cliente.getSenha());
+            psmt.setString(5,cliente.getTelefone());
+            psmt.setString(6, cliente.getEndereco());
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String dataFormatada = cliente.getData_nasc().format(formatter);
+            psmt.setString(7, dataFormatada);
+            
+            psmt.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"erro criar cliente:"+e);
+        }
+    }
     
+    public void excluirCliente(String cpfCliente){
+        String sql = "delete from tb_clientes where cpf_cliente = ?";
+        
+        try {
+            connection = ModuloConexao.conector();
+            PreparedStatement psmt = connection.prepareStatement(sql);
+            
+            psmt.setString(1,cpfCliente);
+            
+            psmt.executeUpdate();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e.getMessage());
+        }
+    }
 }
