@@ -10,7 +10,7 @@ public class PasswordResetService {
     private static final String DB_USER = "yourusername";
     private static final String DB_PASSWORD = "yourpassword";
 
-    public void sendPasswordResetEmail(String userEmail) {
+    public void sendPasswordResetEmail(String userEmail) throws SQLException, MessagingException {
         String pincode = generatePincode();
         Timestamp expirationTime = new Timestamp(System.currentTimeMillis() + 3600 * 1000); // 1 hour from now
 
@@ -23,12 +23,6 @@ public class PasswordResetService {
                 stmt.executeUpdate();
             }
             sendEmail(userEmail, pincode);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Adicione tratamento de exceções apropriado
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            // Adicione tratamento de exceções apropriado
         }
     }
 
