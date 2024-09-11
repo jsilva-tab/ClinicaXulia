@@ -6,9 +6,13 @@ import br.com.clinicaxuliapoo.model.Veterinario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
 
 public class EditVet extends javax.swing.JInternalFrame {
 
@@ -24,7 +28,6 @@ public class EditVet extends javax.swing.JInternalFrame {
         initComponents();
         conexao = ModuloConexao.conector();
         listarVets();
-        
     }
 
     /**
@@ -59,8 +62,6 @@ public class EditVet extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         txtDataNascimento = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
-        ckbxDisponivel = new javax.swing.JCheckBox();
-        ckbxIndisponivel = new javax.swing.JCheckBox();
         jLabel11 = new javax.swing.JLabel();
         txtSalario = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -70,6 +71,7 @@ public class EditVet extends javax.swing.JInternalFrame {
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCarregarCampos = new javax.swing.JButton();
+        toggleDisponibilidade = new javax.swing.JToggleButton();
 
         tabelaVisuvets.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,33 +135,65 @@ public class EditVet extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 13)); // NOI18N
         jLabel10.setText("Disponibilidade:");
 
-        buttonGroup1.add(ckbxDisponivel);
-        ckbxDisponivel.setText("Disponível");
-
-        buttonGroup1.add(ckbxIndisponivel);
-        ckbxIndisponivel.setText("Indisponível");
-
         jLabel11.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 13)); // NOI18N
         jLabel11.setText("Salário:");
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/lupa.png"))); // NOI18N
 
+        txtCampoBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCampoBuscaKeyReleased(evt);
+            }
+        });
+
         btnLimparCampos.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 12)); // NOI18N
         btnLimparCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/esfregao-de-chao.png"))); // NOI18N
         btnLimparCampos.setText("Limpar Campos");
+        btnLimparCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparCamposActionPerformed(evt);
+            }
+        });
 
         btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/criar.png"))); // NOI18N
         btnCadastrar.setToolTipText("Cadastrar");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/criar (1).png"))); // NOI18N
         btnEditar.setToolTipText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 12)); // NOI18N
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/excluir.png"))); // NOI18N
         btnExcluir.setToolTipText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnCarregarCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/prancheta.png"))); // NOI18N
         btnCarregarCampos.setToolTipText("Carregar Campos");
+        btnCarregarCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarCamposActionPerformed(evt);
+            }
+        });
+
+        toggleDisponibilidade.setText("Disponivel");
+        toggleDisponibilidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toggleDisponibilidadeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -205,9 +239,7 @@ public class EditVet extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ckbxDisponivel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ckbxIndisponivel))
+                        .addComponent(toggleDisponibilidade))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,7 +259,7 @@ public class EditVet extends javax.swing.JInternalFrame {
                         .addGap(40, 40, 40)
                         .addComponent(btnCarregarCampos)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,11 +296,10 @@ public class EditVet extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
+                .addGap(2, 2, 2)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(ckbxDisponivel)
-                    .addComponent(ckbxIndisponivel))
+                    .addComponent(toggleDisponibilidade))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
@@ -295,10 +326,7 @@ public class EditVet extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,6 +340,40 @@ public class EditVet extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefoneActionPerformed
 
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        cadastrarVet();
+        listarVets();
+        limparCampos();
+    }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void toggleDisponibilidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleDisponibilidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_toggleDisponibilidadeActionPerformed
+
+    private void btnLimparCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparCamposActionPerformed
+        limparCampos();
+    }//GEN-LAST:event_btnLimparCamposActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        editarVet();
+        listarVets();
+        limparCampos();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        excluirVet();
+        listarVets();
+        limparCampos();
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnCarregarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarCamposActionPerformed
+        carregarCampos();
+    }//GEN-LAST:event_btnCarregarCamposActionPerformed
+
+    private void txtCampoBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCampoBuscaKeyReleased
+        buscarVet();
+    }//GEN-LAST:event_txtCampoBuscaKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
@@ -320,8 +382,6 @@ public class EditVet extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnLimparCampos;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JCheckBox ckbxDisponivel;
-    private javax.swing.JCheckBox ckbxIndisponivel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -338,6 +398,7 @@ public class EditVet extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tabelaVisuvets;
+    private javax.swing.JToggleButton toggleDisponibilidade;
     private javax.swing.JFormattedTextField txtCPF;
     private javax.swing.JTextField txtCRMV;
     private javax.swing.JTextField txtCampoBusca;
@@ -376,4 +437,144 @@ public class EditVet extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null,"erro listar vets jif:"+e);
         }
     }
+    
+    private void cadastrarVet(){
+        Veterinario v = new Veterinario();
+        
+        v.setCrmv(txtCRMV.getText());
+        v.setNome(txtNome.getText());
+        v.setEmail(txtEmail.getText());
+        v.setSenha(new String(txtSenha.getPassword()));
+        v.setTelefone(txtTelefone.getText());
+        v.setEndereco(txtEndereco.getText());
+        v.setCpf(txtCPF.getText());
+        
+        try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Altere o formato de acordo com o necessário
+        LocalDate dataNascimento = LocalDate.parse(txtDataNascimento.getText(), formatter);
+        v.setData_nascimento(dataNascimento);
+        } catch (DateTimeParseException e) {
+         JOptionPane.showMessageDialog(null, "Data inválida! Use o formato dd/MM/yyyy.");
+        }
+        
+        v.setDisponibilidade(toggleDisponibilidade.isSelected());
+        
+        try {
+            float salario = Float.parseFloat(txtSalario.getText());
+            v.setSalario(salario);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        VeterinarioDAO vDAO = new VeterinarioDAO();
+        
+        try {
+            vDAO.cadastrarVeterinario(v);
+            JOptionPane.showMessageDialog(null,"Cadastro feito com sucesso!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"erro cad vet:"+e);
+        }
+    }
+    
+    private void excluirVet(){
+        String crmvVet = txtCRMV.getText();
+        VeterinarioDAO vetDAO = new VeterinarioDAO();
+        
+        int confirmacao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este veterinário?", "Excluir Veterinário", JOptionPane.YES_NO_OPTION);
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            vetDAO.excluirVeterinario(crmvVet);
+            JOptionPane.showMessageDialog(null, "Veterinário excluído com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir veterinário.");
+        }    
+    }
+    
+    private void editarVet(){
+        Veterinario v = new Veterinario();
+        v.setCrmv(txtCRMV.getText());
+        v.setNome(txtNome.getText());
+        v.setEmail(txtEmail.getText());
+        v.setSenha(new String(txtSenha.getPassword()));
+        v.setTelefone(txtTelefone.getText());
+        v.setEndereco(txtEndereco.getText());
+        v.setCpf(txtCPF.getText());
+        
+        try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dataNasc = LocalDate.parse(txtDataNascimento.getText(), formatter);
+        v.setData_nascimento(dataNasc);
+        } catch (DateTimeParseException e) {
+        JOptionPane.showMessageDialog(this, "Data de nascimento inválida.");
+        }
+        
+        v.setDisponibilidade(toggleDisponibilidade.isSelected());
+        
+        try {
+            float salario = Float.parseFloat(txtSalario.getText());
+            v.setSalario(salario);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    
+        VeterinarioDAO vDAO = new VeterinarioDAO();
+        
+        try {
+            vDAO.alterarVeterinario(v);
+            JOptionPane.showMessageDialog(null, "Dados do veterinário atualizados com sucesso!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"erro atualizar dados jif:"+e);
+        }
+    }
+    
+    private void carregarCampos(){
+        int setar = tabelaVisuvets.getSelectedRow();
+        
+        txtCRMV.setText(tabelaVisuvets.getModel().getValueAt(setar,0).toString());
+        txtNome.setText(tabelaVisuvets.getModel().getValueAt(setar, 1).toString());
+        txtEmail.setText(tabelaVisuvets.getModel().getValueAt(setar,2).toString());
+        txtSenha.setText(tabelaVisuvets.getModel().getValueAt(setar, 3).toString());
+        txtTelefone.setText(tabelaVisuvets.getModel().getValueAt(setar, 4).toString());
+        txtEndereco.setText(tabelaVisuvets.getModel().getValueAt(setar,5).toString());
+        txtCPF.setText(tabelaVisuvets.getModel().getValueAt(setar, 6).toString());
+        txtDataNascimento.setText(tabelaVisuvets.getModel().getValueAt(setar,7).toString());
+       
+        if(setar != -1){
+            boolean disponibilidade = (boolean) tabelaVisuvets.getValueAt(setar,8);
+            
+            if(disponibilidade){
+                toggleDisponibilidade.setSelected(true);
+            } else {
+                toggleDisponibilidade.setSelected(false);
+            }
+        }
+        
+        txtSalario.setText(tabelaVisuvets.getModel().getValueAt(setar, 9).toString());
+    }
+    
+    private void buscarVet(){
+        String sql = "select * from tb_veterinarios where crmv like ?";
+        
+        try {
+          pst = conexao.prepareStatement(sql);
+          pst.setString(1, txtCampoBusca.getText()+"%");
+          rs = pst.executeQuery();
+          tabelaVisuvets.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"erro buscar cliente jif:"+e);
+        }
+    }
+    
+    private void limparCampos(){
+        txtCRMV.setText("");
+        txtNome.setText("");
+        txtEmail.setText("");
+        txtSenha.setText("");
+        txtTelefone.setText("");
+        txtEndereco.setText("");
+        txtCPF.setText("");
+        txtDataNascimento.setText("");
+        txtSalario.setText("");
+    }
+    
+    
 }

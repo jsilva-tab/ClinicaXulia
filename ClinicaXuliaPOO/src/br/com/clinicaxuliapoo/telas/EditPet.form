@@ -145,11 +145,11 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnLimparCampos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnCriarPet" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnEditarPet" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="btnExcluirPet" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="btnPreencherCampos" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCriarPet" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">

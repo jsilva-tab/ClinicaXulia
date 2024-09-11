@@ -1,5 +1,6 @@
 package br.com.clinicaxuliapoo.model;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 public class Veterinario{
    private String crmv;
@@ -9,14 +10,14 @@ public class Veterinario{
    private String telefone;
    private String endereco;
    private String cpf;
-   private Date data_nascimento;
+   private LocalDate data_nascimento;
    private boolean disponibilidade;
    private float salario;
 
     public Veterinario() {
     }
 
-    public Veterinario(String crmv, String nome, String email, String senha, String telefone, String endereco, String cpf, Date data_nascimento, boolean disponibilidade, float salario) {
+    public Veterinario(String crmv, String nome, String email, String senha, String telefone, String endereco, String cpf, LocalDate data_nascimento, boolean disponibilidade, float salario) {
         this.crmv = crmv;
         this.nome = nome;
         this.email = email;
@@ -85,11 +86,11 @@ public class Veterinario{
         this.cpf = cpf;
     }
 
-    public Date getData_nascimento() {
+    public LocalDate getData_nascimento() {
         return data_nascimento;
     }
 
-    public void setData_nascimento(Date data_nascimento) {
+    public void setData_nascimento(LocalDate data_nascimento) {
         this.data_nascimento = data_nascimento;
     }
 
@@ -108,6 +109,7 @@ public class Veterinario{
     public void setSalario(float salario) {
         this.salario = salario;
     }
+
 
     @Override
     public String toString(){
