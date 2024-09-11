@@ -6,6 +6,9 @@ import br.com.clinicaxuliapoo.model.Vacina;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -110,22 +113,53 @@ public class FormVac extends javax.swing.JInternalFrame {
 
         btnCriar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/criar.png"))); // NOI18N
         btnCriar.setToolTipText("Cadastrar");
+        btnCriar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCriarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/criar (1).png"))); // NOI18N
         btnEditar.setToolTipText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/excluir.png"))); // NOI18N
         btnExcluir.setToolTipText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnCarregarCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/prancheta.png"))); // NOI18N
         btnCarregarCampos.setToolTipText("Carregar Campos");
+        btnCarregarCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarregarCamposActionPerformed(evt);
+            }
+        });
 
         btnLimparCampos.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 12)); // NOI18N
         btnLimparCampos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/esfregao-de-chao.png"))); // NOI18N
         btnLimparCampos.setText("Limpar Campos");
         btnLimparCampos.setToolTipText("");
+        btnLimparCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparCamposActionPerformed(evt);
+            }
+        });
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/lupa.png"))); // NOI18N
+
+        txtCampoBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCampoBuscaKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -237,6 +271,36 @@ public class FormVac extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLimparCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparCamposActionPerformed
+        limparCampos();
+    }//GEN-LAST:event_btnLimparCamposActionPerformed
+
+    private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
+        cadastrarVacina();
+        listagemVacinas();
+        limparCampos();
+    }//GEN-LAST:event_btnCriarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        editarVacina();
+        listagemVacinas();
+        limparCampos();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        excluirVacina();
+        listagemVacinas();
+        limparCampos();
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnCarregarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarregarCamposActionPerformed
+        carregarCampos();
+    }//GEN-LAST:event_btnCarregarCamposActionPerformed
+
+    private void txtCampoBuscaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCampoBuscaKeyReleased
+        buscarVacina();
+    }//GEN-LAST:event_txtCampoBuscaKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCarregarCampos;
@@ -302,13 +366,93 @@ public class FormVac extends javax.swing.JInternalFrame {
         }
     }
     
-    public void editarVacina(){}
+    public void editarVacina(){
+        Vacina v = new Vacina();
+        v.setNome_vac(txtNome.getText());
+        v.setLote(txtLote.getText());
+        
+        try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dataValidade = LocalDate.parse(txtValidade.getText(), formatter);
+        v.setValidade(dataValidade);
+        } catch (DateTimeParseException e) {
+        JOptionPane.showMessageDialog(this, "Data de validade inválida.");
+        return; 
+        }  
+        
+        v.setFabricante(txtFabricante.getText());
+        v.setDescricao(txtDescricao.getText());
+        v.setIdVacina(Integer.parseInt((txtIdVac.getText())));
+        
+        VacinaDAO vDAO = new VacinaDAO();
+        
+        try {
+            vDAO.editarVacina(v);
+            JOptionPane.showMessageDialog(null, "Vacina atualizada com sucesso!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"erro editar vac jif:"+e);
+        }
+        
+    }
     
-    public void cadastrarVacina(){}
+    public void cadastrarVacina(){
+        Vacina v = new Vacina();
+        
+        v.setNome_vac(txtNome.getText());
+        v.setLote(txtLote.getText());
+        
+        try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dataValidade = LocalDate.parse(txtValidade.getText(), formatter);
+        v.setValidade(dataValidade);
+        } catch (DateTimeParseException e) {
+        JOptionPane.showMessageDialog(this, "Data de validade inválida.");
+        return; 
+        }
+        
+        v.setFabricante(txtFabricante.getText());
+        v.setDescricao(txtDescricao.getText());
+        
+        VacinaDAO vDAO = new VacinaDAO();
+        
+        try {
+            vDAO.cadastrarVacina(v);
+            JOptionPane.showMessageDialog(null,"Vacina cadastrada com sucesso!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"erro cad vac jif:"+e);
+        }
+    }
     
-    public void excluirVacina(){}
+    public void excluirVacina(){
+        int idVacina = Integer.parseInt(txtIdVac.getText());
+        VacinaDAO vDAO = new VacinaDAO();
+        
+        int confirmacao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esta vacina?", "Excluir Vacina", JOptionPane.YES_NO_OPTION);
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            vDAO.excluirVacina(idVacina);
+            JOptionPane.showMessageDialog(null, "Vacina excluído com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir vacina.");
+        }
+    }
     
-    public void carregarCampos(){}
+    public void carregarCampos(){
+        int setar = tabelaVisuVacinas.getSelectedRow();
+        
+        txtIdVac.setText(tabelaVisuVacinas.getModel().getValueAt(setar, 0).toString());
+        txtNome.setText(tabelaVisuVacinas.getModel().getValueAt(setar,1).toString());
+        txtLote.setText(tabelaVisuVacinas.getModel().getValueAt(setar, 2).toString());
+        txtValidade.setText(tabelaVisuVacinas.getModel().getValueAt(setar,3).toString());
+        txtFabricante.setText(tabelaVisuVacinas.getModel().getValueAt(setar, 4).toString());
+        txtDescricao.setText(tabelaVisuVacinas.getModel().getValueAt(setar,5).toString());
+    }
     
-    public void limparCampos(){}
+    public void limparCampos(){
+        txtIdVac.setText("");
+        txtNome.setText("");
+        txtLote.setText("");
+        txtValidade.setText("");
+        txtFabricante.setText("");
+        txtDescricao.setText("");
+    }
 }

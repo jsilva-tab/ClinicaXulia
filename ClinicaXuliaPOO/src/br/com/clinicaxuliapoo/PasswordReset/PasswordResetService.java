@@ -22,7 +22,8 @@ public class PasswordResetService {
                 stmt.setTimestamp(3, expirationTime);
                 stmt.executeUpdate();
             }
-            sendEmail(userEmail, pincode);
+            EmailSender emailSender = new EmailSender();
+            emailSender.sendEmail(userEmail,"Password Reset","Your pin code is:"+pincode);
         }
     }
 
@@ -32,27 +33,48 @@ public class PasswordResetService {
         return String.valueOf(pincode);
     }
 
-    private void sendEmail(String userEmail, String pincode) throws MessagingException {
-        String host = "smtp.gmail.com";
-        final String user = "julia.vieira61@aluno.ifce.edu.br";
-        final String password = "M4r1n4!2010";
+    public class EmailSender {
 
+    private final String host = "smtp.gmail.com";
+    private final int port = 587;
+    private final String username = "julia.vieira61@aluno.ifce.edu.br";
+    private final String password = "M4r1n4!2010";
+
+    public void sendEmail(String to, String subject, String body) {
         Properties props = new Properties();
-        props.put("mail.smtp.host", host);
         props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", String.valueOf(port));
+        props.put("mail.smtp.ssl.enable", "false");
 
-        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+        Session session = Session.getInstance(props, new Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(user, password);
+                return new PasswordAuthentication(username, password);
             }
         });
 
-        MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(user));
-        message.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
-        message.setSubject("Password Reset");
-        message.setText("Your password reset pincode is: " + pincode);
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject(subject);
+            message.setText(body);
 
-        Transport.send(message);
+            Transport.send(message);
+            System.out.println("Email sent successfully");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
+}
+
+    public static void main(String[] args) {
+        PasswordResetService service = new PasswordResetService(); // Instancia o serviço
+        EmailSender emailSender = service.new EmailSender(); // Cria instância da classe interna
+        emailSender.sendEmail("jsv2367@gmail.com", "Test Subject", "This is a test email.");
+    }
+    
 }

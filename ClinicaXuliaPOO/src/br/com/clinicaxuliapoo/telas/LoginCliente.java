@@ -80,6 +80,7 @@ public class LoginCliente extends javax.swing.JFrame {
         label_status = new javax.swing.JLabel();
         logadm = new javax.swing.JButton();
         campo_login = new javax.swing.JFormattedTextField();
+        btnEsqueciSenha = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clínica Veterinária Xulia's");
@@ -131,6 +132,16 @@ public class LoginCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        btnEsqueciSenha.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 11)); // NOI18N
+        btnEsqueciSenha.setText("Esqueci Senha.");
+        btnEsqueciSenha.setBorder(null);
+        btnEsqueciSenha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEsqueciSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEsqueciSenhaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,6 +153,9 @@ public class LoginCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnEsqueciSenha)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(botao_cad)
                         .addGap(18, 18, 18)
@@ -168,14 +182,16 @@ public class LoginCliente extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campo_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(2, 2, 2)
+                .addComponent(btnEsqueciSenha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botao_login, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botao_cad, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_status))
                 .addGap(24, 24, 24)
                 .addComponent(logadm)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(351, 338));
@@ -194,6 +210,12 @@ public class LoginCliente extends javax.swing.JFrame {
     private void logadmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logadmActionPerformed
         entrarAdmin();
     }//GEN-LAST:event_logadmActionPerformed
+
+    private void btnEsqueciSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueciSenhaActionPerformed
+        TelaEsqueceuSenha tForgotPassword = new TelaEsqueceuSenha();
+        tForgotPassword.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnEsqueciSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,6 +256,7 @@ public class LoginCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botao_cad;
     private javax.swing.JButton botao_login;
+    private javax.swing.JButton btnEsqueciSenha;
     private javax.swing.JFormattedTextField campo_login;
     private javax.swing.JPasswordField campo_senha;
     private javax.swing.JLabel jLabel1;
