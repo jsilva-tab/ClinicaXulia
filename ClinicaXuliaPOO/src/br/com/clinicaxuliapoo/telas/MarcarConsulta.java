@@ -16,10 +16,6 @@ import javax.swing.JOptionPane;
 
 public class MarcarConsulta extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form MarcarConsulta
-     */
-    
     private ConsultaDAO consultaDAO = new ConsultaDAO();
     
     public MarcarConsulta() {

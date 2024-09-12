@@ -44,10 +44,10 @@ public class ClienteDAO {
                 objCliente.setEndereco(rs.getString("endereco_cliente"));
                 String dataNascStr = rs.getString("data_nascimento_cliente");
                 if (dataNascStr != null) {
-                    LocalDate data_nasc = LocalDate.parse(dataNascStr); // Converte a string para LocalDate
+                    LocalDate data_nasc = LocalDate.parse(dataNascStr); 
                     objCliente.setData_nasc(data_nasc);
                 } else {
-                    objCliente.setData_nasc(null);  // Caso a data seja nula no banco
+                    objCliente.setData_nasc(null);  
                 }                 
                 clientes.add(objCliente);
             }
@@ -77,16 +77,16 @@ public class ClienteDAO {
                 cliente.setEndereco(rs.getString("endereco"));
                 String dataNascStr = rs.getString("data_nascimento");
                 if (dataNascStr != null) {
-                    LocalDate data_nasc = LocalDate.parse(dataNascStr); // Converte a string para LocalDate
+                    LocalDate data_nasc = LocalDate.parse(dataNascStr); 
                     cliente.setData_nasc(data_nasc);
                 } else {
-                    cliente.setData_nasc(null);  // Caso a data seja nula no banco
+                    cliente.setData_nasc(null);  
                 }                
                 
                 return cliente;
             }
         }
-        return null;  // Retorna null se não encontrar o cliente
+        return null; 
     }
 
     public boolean atualizarCliente(Cliente cliente){
@@ -154,4 +154,72 @@ public class ClienteDAO {
             JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e.getMessage());
         }
     }
+
+    public Cliente buscarPorEmail(String email) {
+        Cliente cliente = null;
+        String sql = "SELECT * FROM tb_clientes WHERE email_cliente = ?";
+
+        try (Connection conn = ModuloConexao.conector();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                cliente = new Cliente();
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setSenha(rs.getString("senha"));
+                cliente.setTelefone(rs.getString("telefone"));
+                cliente.setEndereco(rs.getString("endereco"));
+                String dataNascStr = rs.getString("data_nascimento");
+                if (dataNascStr != null) {
+                    LocalDate data_nasc = LocalDate.parse(dataNascStr); 
+                    cliente.setData_nasc(data_nasc);
+                } else {
+                    cliente.setData_nasc(null); 
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return cliente;
+    }
+
+    public void atualizarSenha(Cliente cliente) {
+        String sql = "UPDATE tb_clientes SET senha_cliente = ? WHERE email_cliente = ?";
+
+        try (Connection conn = ModuloConexao.conector();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setString(1, cliente.getSenha());
+            stmt.setString(2, cliente.getEmail());
+            stmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public boolean cpfExiste(String cpf){
+        String sql = "select count(*) from tb_clientes where cpf_cliente = ?";
+        
+        try {
+            PreparedStatement psmt = connection.prepareStatement(sql);
+            psmt.setString(1,cpf);
+            ResultSet rs = psmt.executeQuery();
+            
+            if(rs.next()){
+                return rs.getInt(1)>0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
 }
+

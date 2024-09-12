@@ -13,10 +13,6 @@ import net.proteanit.sql.DbUtils;
 
 
 public class EditPet extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form EditPet
-     */
     
     Connection conexao = null;
     PreparedStatement pst = null;

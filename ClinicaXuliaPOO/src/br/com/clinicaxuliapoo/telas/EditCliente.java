@@ -17,9 +17,6 @@ import net.proteanit.sql.DbUtils;
 
 public class EditCliente extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form EditCliente
-     */
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -404,7 +401,7 @@ public class EditCliente extends javax.swing.JInternalFrame {
     Cliente cliente = new Cliente();
     cliente.setNome(txtNome.getText());
     cliente.setEmail(txtEmail.getText());
-    cliente.setSenha(new String(txtSenha.getPassword())); // Converter senha para String
+    cliente.setSenha(new String(txtSenha.getPassword())); 
     cliente.setTelefone(txtTelefone.getText());
     cliente.setEndereco(txtEndereco.getText());
 
@@ -415,10 +412,10 @@ public class EditCliente extends javax.swing.JInternalFrame {
         cliente.setData_nasc(dataNasc);
     } catch (DateTimeParseException e) {
         JOptionPane.showMessageDialog(this, "Data de nascimento inválida.");
-        return; // Interrompe o processo de salvar se a data for inválida
+        return; 
     }
 
-    cliente.setCpf(txtCPF.getText()); // O CPF pode ser exibido, mas não editado
+    cliente.setCpf(txtCPF.getText()); 
 
     ClienteDAO clienteDAO = new ClienteDAO();
 

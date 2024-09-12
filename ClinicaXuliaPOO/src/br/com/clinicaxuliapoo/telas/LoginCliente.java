@@ -7,9 +7,6 @@ import javax.swing.JOptionPane;
 
 public class LoginCliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LoginCliente
-     */
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -55,7 +52,6 @@ public class LoginCliente extends javax.swing.JFrame {
     public LoginCliente() {
         initComponents();
         conexao = ModuloConexao.conector();
-        // apoio ao status de conexao -> System.out.println(conexao);
         if (conexao != null) {
             label_status.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/clinicaxuliapoo/icones/database_sucess.png")));
         } else {
@@ -212,9 +208,9 @@ public class LoginCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_logadmActionPerformed
 
     private void btnEsqueciSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueciSenhaActionPerformed
-        TelaEsqueceuSenha tForgotPassword = new TelaEsqueceuSenha();
-        tForgotPassword.setVisible(true);
-        this.dispose();
+//        TelaEsqueceuSenha tForgotPassword = new TelaEsqueceuSenha();
+//        tForgotPassword.setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_btnEsqueciSenhaActionPerformed
 
     /**

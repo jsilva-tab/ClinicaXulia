@@ -1,13 +1,11 @@
 package br.com.clinicaxuliapoo.telas;
 
-import br.com.clinicaxuliapoo.dao.CarteiraDAO;
 import br.com.clinicaxuliapoo.dao.PetDAO;
 import br.com.clinicaxuliapoo.dao.VacinaDAO;
 import br.com.clinicaxuliapoo.model.Pet;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Component;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListCellRenderer;
@@ -18,9 +16,6 @@ import javax.swing.JTextField;
 
 public class MarcarVacina extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form MarcarVacina
-     */
     private JComboBox<String> comboPets;
     private JDateChooser dataVacinaChooser;
     private JTextField horaTextField;
@@ -199,7 +194,7 @@ public class MarcarVacina extends javax.swing.JInternalFrame {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value instanceof Pet) {
-            value = ((Pet) value).getNome_pet();  // Mostra o nome do Pet
+            value = ((Pet) value).getNome_pet();  
         }
         return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
     }
@@ -212,35 +207,27 @@ public class MarcarVacina extends javax.swing.JInternalFrame {
     }
     
     private void marcarVacinacao(){
-    // Obtendo o objeto Pet do JComboBox
-    Pet petSelecionado = (Pet) cbxPets.getSelectedItem();  // Sem fazer cast para String
+    Pet petSelecionado = (Pet) cbxPets.getSelectedItem();  
     
-    // Acessa o ID do pet diretamente do objeto
     int idPet = petSelecionado.getIdPet();
     
-    // Pega a data selecionada do JDateChooser
     LocalDate dataVacina = new java.sql.Date(dcAplicacaoVacina.getDate().getTime()).toLocalDate();
     
     String hora = txtHora.getText();
     
-    // Captura a vacina selecionada no JComboBox
     String vacinaSelecionada = (String) cbxVacina.getSelectedItem();
     
-    // Bloco try-catch para lidar com sucesso ou erro
     try {
         boolean sucesso = vacinaDao.marcarVacina(idPet, vacinaSelecionada, dataVacina, hora);
         
         if (sucesso) {
-            // Mensagem de confirmação
             JOptionPane.showMessageDialog(this, "Vacinação marcada com sucesso!");
         } else {
-            // Caso a operação não seja bem-sucedida
             JOptionPane.showMessageDialog(this, "Não foi possível marcar a vacinação. Tente novamente.");
         }
     } catch (Exception e) {
-        // Mensagem de erro em caso de exceção
         JOptionPane.showMessageDialog(this, "Ocorreu um erro ao marcar a vacinação: " + e.getMessage());
-        e.printStackTrace();  // Para fins de depuração
+        e.printStackTrace(); 
     }
   }
     

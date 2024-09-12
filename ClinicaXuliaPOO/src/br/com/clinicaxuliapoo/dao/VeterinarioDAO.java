@@ -47,10 +47,10 @@ public class VeterinarioDAO {
                 
                 String dataNascStr = rs.getString("data_nascimento_vet");
                 if (dataNascStr != null) {
-                    LocalDate data_nasc = LocalDate.parse(dataNascStr); // Converte a string para LocalDate
+                    LocalDate data_nasc = LocalDate.parse(dataNascStr); 
                     objVet.setData_nascimento(data_nasc);
                 } else {
-                    objVet.setData_nascimento(null);  // Caso a data seja nula no banco
+                    objVet.setData_nascimento(null);  
                 }  
                 
                 objVet.setDisponibilidade(rs.getBoolean("disponibilidade"));

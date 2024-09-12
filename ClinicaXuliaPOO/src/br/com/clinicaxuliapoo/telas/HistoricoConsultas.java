@@ -12,16 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
-/**
- *
- * @author J. Silva
- */
 public class HistoricoConsultas extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form HistoricoConsultas
-     */
-    
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;

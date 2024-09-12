@@ -10,11 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
 public class PetsPerfil extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form PetsPerfil
-     */
-    
     
     Connection conexao = null;
     PreparedStatement pst = null;

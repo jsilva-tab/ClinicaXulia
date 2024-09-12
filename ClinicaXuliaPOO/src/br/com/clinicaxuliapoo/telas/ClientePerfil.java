@@ -12,10 +12,6 @@ import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
 public class ClientePerfil extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form ClientePerfil
-     */
     
     Connection conexao = null;
     PreparedStatement pst = null;
@@ -209,7 +205,7 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
 
     
     public void preencherCamposEdicao() {
-    String cpfUsuario = SessaoUsuario.getCpfUsuarioLogado();  // Pega o CPF do usuário logado
+    String cpfUsuario = SessaoUsuario.getCpfUsuarioLogado(); 
     String sql = "SELECT * FROM tb_clientes WHERE cpf_cliente=?";
     
     try {
@@ -224,7 +220,7 @@ public class ClientePerfil extends javax.swing.JInternalFrame {
             txtTelefone.setText(rs.getString("telefone_cliente"));
             txtEndereco.setText(rs.getString("endereco_cliente"));
             txtDataNascimento.setText(rs.getString("data_nascimento_cliente"));
-            txtCpf.setText(rs.getString("cpf_cliente"));  // CPF não editável
+            txtCpf.setText(rs.getString("cpf_cliente"));  
             txtCpf.setEnabled(false);
         }
     } catch (SQLException e) {

@@ -12,9 +12,6 @@ import java.sql.SQLException;
 
 public class MinhasCarteiras extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form MinhasCarteiras
-     */
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -25,26 +22,27 @@ public class MinhasCarteiras extends javax.swing.JInternalFrame {
         initComponents();
         conexao = ModuloConexao.conector();
         
-    CarteiraDAO carteiraDAO = new CarteiraDAO();
-    List<Carteira> carteirasRealizadas = null;
-    try {
-        carteirasRealizadas = carteiraDAO.listarVacinasAplicadas();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-
-    if (carteirasRealizadas != null) {
-        DefaultTableModel model = (DefaultTableModel) tabelaVisuCarteiras.getModel();
-        for (Carteira carteira : carteirasRealizadas) {
-            model.addRow(new Object[]{
-                carteira.getIdPet(),
-                carteira.getNomePet(),
-                carteira.getNomeVacina(),
-                carteira.getDataAplicacao(),
-                carteira.getStatus()
-            });
+        CarteiraDAO carteiraDAO = new CarteiraDAO();
+        List<Carteira> carteirasRealizadas = null;
+    
+        try {
+            carteirasRealizadas = carteiraDAO.listarVacinasAplicadas();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    }
+
+        if (carteirasRealizadas != null) {
+            DefaultTableModel model = (DefaultTableModel) tabelaVisuCarteiras.getModel();
+            for (Carteira carteira : carteirasRealizadas) {
+                model.addRow(new Object[]{
+                    carteira.getIdPet(),
+                    carteira.getNomePet(),
+                    carteira.getNomeVacina(),
+                    carteira.getDataAplicacao(),
+                    carteira.getStatus()
+                });
+            }
+        }
     }
 
     /**
@@ -115,25 +113,6 @@ public class MinhasCarteiras extends javax.swing.JInternalFrame {
     private javax.swing.JTable tabelaVisuCarteiras;
     // End of variables declaration//GEN-END:variables
 
-//    private void listarCarteiras(){
-//      try{
-//        CarteiraDAO carteiraDAO = new CarteiraDAO();
-//        List<Carteira> carteirasRealizadas = carteiraDAO.listarVacinasAplicadas(idPet);
-//
-//            DefaultTableModel model = (DefaultTableModel) tabelaVisuCarteiras.getModel();
-//            for (Carteira carteira : carteirasRealizadas) {
-//              model.addRow(new Object[]{
-//                 carteira.getNomePet(),
-//                 carteira.getNomeVacina(),
-//                 carteira.getDataAplicacao(),
-//                 carteira.getStatus()
-//        });
-//    }     
-//      
-//      } catch(Exception e){
-//          JOptionPane.showMessageDialog(null,"erro lista cart jif"+e);
-//      }
-//    }
     
     
 }

@@ -107,7 +107,8 @@ public class VisualizarAgendamentos extends javax.swing.JInternalFrame {
     private void carregarConsultasPendentes(){
         List<Consulta> consultasPendentes = agendamentoDAO.listarConsultasPendentes();
         DefaultTableModel model = (DefaultTableModel) tabelaVisuCon.getModel();
-        model.setRowCount(0); // Limpar tabela
+        model.setRowCount(0); 
+        
         for (Consulta consulta : consultasPendentes) {
             model.addRow(new Object[]{
                 consulta.getIdConsulta(),
@@ -124,7 +125,7 @@ public class VisualizarAgendamentos extends javax.swing.JInternalFrame {
     try {
         List<Carteira> vacinacoesPendentes = agendamentoDAO.listarVacinacoesPendentes();
         DefaultTableModel model = (DefaultTableModel) tabelaVisuVac.getModel();
-        model.setRowCount(0); // Limpar tabela
+        model.setRowCount(0); 
 
         for (Carteira carteira : vacinacoesPendentes) {
             System.out.println("Adicionando pet: " + carteira.getNomePet());

@@ -16,9 +16,6 @@ import net.proteanit.sql.DbUtils;
 
 public class EditVet extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form EditVet
-     */
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -306,11 +303,11 @@ public class EditVet extends javax.swing.JInternalFrame {
                     .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimparCampos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCadastrar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEditar)
                     .addComponent(btnExcluir)
-                    .addComponent(btnCarregarCampos))
+                    .addComponent(btnCarregarCampos)
+                    .addComponent(btnCadastrar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel12)
@@ -450,7 +447,7 @@ public class EditVet extends javax.swing.JInternalFrame {
         v.setCpf(txtCPF.getText());
         
         try {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Altere o formato de acordo com o necessário
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
         LocalDate dataNascimento = LocalDate.parse(txtDataNascimento.getText(), formatter);
         v.setData_nascimento(dataNascimento);
         } catch (DateTimeParseException e) {

@@ -12,7 +12,6 @@ public class AgendamentoDAO {
     private Connection conn;
 
     public AgendamentoDAO() {
-        // Estabelecer a conexão com o banco de dados
         this.conn = ModuloConexao.conector();
     }
 
@@ -58,9 +57,9 @@ public class AgendamentoDAO {
 
             while (rs.next()) {
                 Carteira carteira = new Carteira();
-                carteira.setIdPet(rs.getInt("idPet"));  // idPet como int
-                carteira.setNomePet(rs.getString("nome_pet"));  // Convertido para String
-                carteira.setNomeVacina(rs.getString("nomeVacina"));  // Convertido para String
+                carteira.setIdPet(rs.getInt("idPet"));  
+                carteira.setNomePet(rs.getString("nome_pet"));  
+                carteira.setNomeVacina(rs.getString("nomeVacina"));  
                 carteira.setDataAplicacao(rs.getDate("data_aplicacao").toLocalDate());
                 carteira.setStatus(rs.getString("status"));
                 vacinacoesPendentes.add(carteira);

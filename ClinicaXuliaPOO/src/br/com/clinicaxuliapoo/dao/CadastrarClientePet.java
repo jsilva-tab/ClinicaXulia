@@ -44,21 +44,20 @@ public class CadastrarClientePet {
         }
     }
 
-    // Método para cadastrar usuário e pet juntos
     public void cadastrarClienteEPet(Cliente cliente, Pet pet) {
         Connection conn = null;
         try {
             conn = getConnection();
-            conn.setAutoCommit(false); // Inicia transação
+            conn.setAutoCommit(false); 
 
-            inserirCliente(cliente); // Insere o usuário
-            inserirPet(pet);         // Insere o pet associado
+            inserirCliente(cliente); 
+            inserirPet(pet);         
 
-            conn.commit(); // Comita a transação
+            conn.commit(); 
         } catch (SQLException e) {
             if (conn != null) {
                 try {
-                    conn.rollback(); // Desfaz a transação em caso de erro
+                    conn.rollback(); 
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }

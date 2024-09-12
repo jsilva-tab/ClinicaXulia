@@ -68,7 +68,7 @@ public List<Carteira> listarVacinasAplicadas() throws SQLException {
 
         while (rs.next()) {
             Carteira carteira = new Carteira();
-            carteira.setIdPet(rs.getInt("idPet")); // Certifique-se de que está selecionando o idPet corretamente
+            carteira.setIdPet(rs.getInt("idPet")); 
             carteira.setNomePet(rs.getString("nomePet"));
             carteira.setNomeVacina(rs.getString("nomeVacina"));
             carteira.setDataAplicacao(rs.getDate("data_aplicacao").toLocalDate());

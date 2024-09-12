@@ -6,9 +6,6 @@ import javax.swing.JOptionPane;
 
 public class LoginAdministrador extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LoginCliente
-     */
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;

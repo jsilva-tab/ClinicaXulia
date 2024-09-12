@@ -16,9 +16,6 @@ import net.proteanit.sql.DbUtils;
 
 public class FormVac extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form FormVac
-     */
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;

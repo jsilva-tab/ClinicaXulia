@@ -7,16 +7,8 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import java.lang.String;
 
-/**
- *
- * @author J. Silva
- */
 public class MenuCliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuCliente
-     */
-    
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;

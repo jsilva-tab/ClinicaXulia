@@ -1,6 +1,7 @@
 package br.com.clinicaxuliapoo.telas;
 
 import br.com.clinicaxuliapoo.dao.CadastrarClientePet;
+import br.com.clinicaxuliapoo.dao.ClienteDAO;
 import br.com.clinicaxuliapoo.model.Cliente;
 import br.com.clinicaxuliapoo.model.Pet;
 import java.sql.*;
@@ -11,12 +12,10 @@ import javax.swing.JOptionPane;
 
 public class TelaCadastro extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaCadastro
-     */
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
+    ClienteDAO clienteDAO = new ClienteDAO();
     
     public TelaCadastro() {
         initComponents();
@@ -169,6 +168,11 @@ public class TelaCadastro extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtCPF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCPFFocusLost(evt);
+            }
+        });
 
         try {
             txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
@@ -351,15 +355,12 @@ public class TelaCadastro extends javax.swing.JFrame {
                 int idade = Integer.parseInt(txtIdade.getText());
                 String sexo = cbxSexo.getSelectedItem().toString();
 
-                // Criando instâncias de Usuario e Pet
                 Cliente cliente = new Cliente(cpf, nome, email, senha, telefone, endereco, data_nasc);
                 Pet pet = new Pet(cpf,nomePet, especie, raca, idade, sexo);
 
-                // Chama o método de cadastro
                 CadastrarClientePet cadcliepet = new CadastrarClientePet();
                 cadcliepet.cadastrarClienteEPet(cliente, pet);
 
-                // Mostrar mensagem de sucesso
                 JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
     }//GEN-LAST:event_botaoCadActionPerformed
 
@@ -372,6 +373,15 @@ public class TelaCadastro extends javax.swing.JFrame {
         lgncli.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_botaoVoltarLoginActionPerformed
+
+    private void txtCPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCPFFocusLost
+        String cpf = txtCPF.getText().trim();
+        
+        if(clienteDAO.cpfExiste(cpf)){
+            JOptionPane.showMessageDialog(this,"Esse CPF já está cadastrado!","Erro",JOptionPane.ERROR_MESSAGE);
+            txtCPF.setText("");
+        }
+    }//GEN-LAST:event_txtCPFFocusLost
 
     /**
      * @param args the command line arguments
